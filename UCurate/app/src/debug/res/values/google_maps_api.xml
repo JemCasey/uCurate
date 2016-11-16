@@ -1,0 +1,19 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=42:12:C6:61:0B:84:66:FD:F8:64:12:2A:FE:0E:E7:12:65:44:FC:8A%3Bcom.example.jbrow.ucurate
+
+    You can also add your credentials to an existing key, using this line:
+    42:12:C6:61:0B:84:66:FD:F8:64:12:2A:FE:0E:E7:12:65:44:FC:8A;com.example.jbrow.ucurate
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCfhqJ7mbauROXaOSYFkIiw2l3FuU4DR2U</string>
+</resources>

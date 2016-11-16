@@ -23,5 +23,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(openCamera);
             }
         });
+        Button mapButton = (Button) findViewById(R.id.map_button);
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent openTour = new Intent(MainActivity.this,ViewTourActivity.class);
+                startActivity(openTour);
+            }
+        });
     }
 }
