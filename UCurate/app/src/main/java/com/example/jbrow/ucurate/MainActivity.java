@@ -1,5 +1,6 @@
 package com.example.jbrow.ucurate;
 
+
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -218,7 +219,5 @@ public class MainActivity extends AppCompatActivity
                     return null;
             }
         }
-
-
     }
 }
