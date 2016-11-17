@@ -1,6 +1,21 @@
 <resources>
     <string name="app_name">UCurate</string>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- Strings for fragments -->
+    <string name="feed_title">Feed</string>
+    <string name="explore_title">Explore</string>
+    <string name="account_title">Account</string>
+
     <string name="camera">Camera</string>
     <string name="map">Map</string>
     <string name="title_activity_view_tour">Map</string>
+
 </resources>
