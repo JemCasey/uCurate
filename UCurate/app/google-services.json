@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "377639230663-ommj8chi9alb52te7buenk4hsg458h3e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jbrow.ucurate",
+            "certificate_hash": "46F8AE4AA77758F382E14A1FDDDAE80E1B4950F5"
+          }
+        },
+        {
           "client_id": "377639230663-q5o9fbaao3bupe93dj5srrncokhl0p9u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
