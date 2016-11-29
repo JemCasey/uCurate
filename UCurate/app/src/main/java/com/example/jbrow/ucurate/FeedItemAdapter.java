@@ -58,11 +58,32 @@ public class FeedItemAdapter extends BaseAdapter {
         ImageView userImage = (ImageView) itemLayout.findViewById(R.id.user_image);
         userImage.setImageBitmap(feedItem.getUserImage());
 
+        userImage.setOnClickListener(new View.OnClickListener() {
+            // start view account activity
+            public void onClick(View view) {
+
+            }
+        });
+
         TextView updateContent = (TextView) itemLayout.findViewById(R.id.update_content);
         updateContent.setText(feedItem.getUpdate());
 
+        updateContent.setOnClickListener(new View.OnClickListener() {
+            // start view tour/view art activity
+            public void onClick(View view) {
+
+            }
+        });
+
         ImageView updateImage = (ImageView) itemLayout.findViewById(R.id.update_image);
         updateImage.setImageBitmap(feedItem.getUpdateImage());
+
+        updateImage.setOnClickListener(new View.OnClickListener() {
+            // start view tour/view art activity
+            public void onClick(View view) {
+
+            }
+        });
 
         return itemLayout;
     }
