@@ -60,6 +60,28 @@ public class Artwork implements Parcelable {
         }
     };
 
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLocation(LatLng location) {
+        this.location = location;
+    }
+
+    public Bitmap getImage() {
+
+        return image;
+    }
+
     public String getTitle() {
         return title;
     }
