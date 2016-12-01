@@ -1,5 +1,7 @@
 package com.example.jbrow.ucurate;
 
+//GIT test
+
 /**
  * Created by randyflores on 11/29/16.
  */
