@@ -182,7 +182,12 @@ public class MainActivity extends AppCompatActivity
             Intent openTour = new Intent(MainActivity.this,ViewTourActivity.class);
             openTour.putParcelableArrayListExtra("artworks", artworks);
             startActivity(openTour);
+
+        } else if (id == R.id.use_camera) {
+            Intent openCamera = new Intent(MainActivity.this,CameraActivity.class);
+            startActivity(openCamera);
         }
+
 
         return super.onOptionsItemSelected(item);
     }

@@ -12,4 +12,9 @@
         android:orderInCategory="100"
         android:title="Sample Tour"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/use_camera"
+        android:orderInCategory="100"
+        android:title="Use Camera"
+        app:showAsAction="never" />
 </menu>
