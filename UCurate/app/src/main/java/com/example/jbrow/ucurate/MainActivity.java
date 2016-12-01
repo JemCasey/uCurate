@@ -1,6 +1,9 @@
 package com.example.jbrow.ucurate;
 
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,8 +27,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
-    implements OnFragmentInteractionListener {
+        implements OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -156,14 +167,26 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_sample_tour) {
+            LatLng locone = new LatLng(38.990633, -76.949384);
+
+            LatLng loctwo = new LatLng(38.984929, -76.947760);
+
+            ArrayList<Artwork> artworks = new ArrayList<>();
+            artworks.add(new Artwork("Rhein II", "This is by Andreas Gursky. It became the most expensive photograph ever sold when a print was auctioned for $4.3 million in 2011.", locone));
+            artworks.add(new Artwork("Betty", "this is by Gerhard Richter", loctwo));
+            artworks.add(new Artwork("Germany's Spiritual Heroes", "this is by Anselm Kiefer", new LatLng(38.992884, -76.948417)));
+            Intent openTour = new Intent(MainActivity.this,ViewTourActivity.class);
+            openTour.putParcelableArrayListExtra("artworks", artworks);
+            startActivity(openTour);
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     public void onFragmentInteraction(int position) {
 //        FeedFragment articleFrag = (FeedFragment)
