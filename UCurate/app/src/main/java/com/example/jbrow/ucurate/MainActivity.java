@@ -27,7 +27,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +41,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
         implements OnFragmentInteractionListener {
 
+    private static final String ANONYMOUS = "None";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -64,11 +69,21 @@ public class MainActivity extends AppCompatActivity
 
     private boolean isFabOpen;
 
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private String mUsername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Initialize Firebase Auth
+        mUsername = getIntent().getStringExtra("UserID");
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
+
+        //mGoogleApiClient = getIntent().getParcelableExtra("mGoogleApiClient");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -194,8 +209,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.action_sample_edit_tour) {
             Intent openEditTour = new Intent(MainActivity.this, EditTourActivity.class);
             startActivity(openEditTour);
+        } else if (id == R.id.sign_out_menu) {
+            mFirebaseAuth.signOut();
+            mUsername = ANONYMOUS;
+            startActivity(new Intent(this, Login.class));
         }
-
 
         return super.onOptionsItemSelected(item);
     }
