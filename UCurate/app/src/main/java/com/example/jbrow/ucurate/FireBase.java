@@ -2,9 +2,14 @@ package com.example.jbrow.ucurate;
 import android.util.Log;
 
 
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +59,7 @@ public final class FireBase {
             return false;
         }
         if (newTour.start == null){
+            //TODO uncomment once we're adding real tours
             //return false;
         }
         if (newTour.description == null){
@@ -68,9 +74,61 @@ public final class FireBase {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
         DatabaseReference toursRef = ref.child("tours");
-        toursRef.child(userid).setValue(newTour);
+        toursRef.child(userid).push().setValue(newTour);
 
         return true;
+    }
+
+    //adds an artwork to the database
+    public static boolean addArtwork(String userid, Artwork art){
+        Log.d(TAG, "entered addArtwork");
+        Artwork newArt = new Artwork(art);
+        if (userid == null || userid.equals("")){
+            return false;
+        }
+        if (newArt.location == null) {
+            //TODO uncomment once we're storing actual artworks
+            //return false;
+        }
+        //Map<String, Tour> t = new HashMap<String, Tour>();
+        //t.put(userid, newTour);
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference();
+        DatabaseReference artsRef = ref.child("artwork");
+        artsRef.child(userid).push().setValue(newArt);
+
+        return true;
+    }
+
+
+    //TODO figure out how to get the user out of the inner class
+    //gotta happen in onChildAdded
+    //retrieve a user by their userid from the database
+    public static User getUser(String userid){
+        final User outputUser;
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("users");
+        Query qRef = ref.orderByKey().equalTo(userid);
+
+        qRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChild) {
+                //outputUser = dataSnapshot.getValue(User.class);
+
+            }
+            @Override
+            public void onChildRemoved(DataSnapshot d){}
+            @Override
+            public void onCancelled(DatabaseError d){}
+            @Override
+            public void onChildChanged(DataSnapshot s, String prevChildName){}
+            @Override
+            public void onChildMoved(DataSnapshot s, String prevChildName){}
+
+        });
+
+        return null;
     }
 
 
