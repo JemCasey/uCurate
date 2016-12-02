@@ -191,6 +191,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.use_camera) {
             Intent openCamera = new Intent(MainActivity.this,CameraActivity.class);
             startActivity(openCamera);
+        } else if (id == R.id.action_sample_edit_tour) {
+            Intent openEditTour = new Intent(MainActivity.this, EditTourActivity.class);
+            startActivity(openEditTour);
         }
 
 

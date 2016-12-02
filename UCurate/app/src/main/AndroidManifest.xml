@@ -59,9 +59,9 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+        <activity android:name=".NewTourActivity" />
+        <activity android:name=".AddToTourActivity" />
+        <activity android:name=".EditTourActivity" />
     </application>
 
 </manifest>

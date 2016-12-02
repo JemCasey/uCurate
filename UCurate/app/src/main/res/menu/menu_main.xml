@@ -17,4 +17,9 @@
         android:orderInCategory="100"
         android:title="Use Camera"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sample_edit_tour"
+        android:orderInCategory="100"
+        android:title="Sample Edit Tour"
+        app:showAsAction="never" />
 </menu>
