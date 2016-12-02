@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.jbrow.ucurate.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sample_tour"
+        android:orderInCategory="100"
+        android:title="Sample Tour"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/use_camera"
+        android:orderInCategory="100"
+        android:title="Use Camera"
+        app:showAsAction="never" />
+</menu>
