@@ -1,5 +1,6 @@
 package com.example.jbrow.ucurate;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,6 +12,11 @@ import java.util.ArrayList;
 
 
 public class Tour implements Parcelable {
+
+    public static final String TOUR_NAME = "tour_name";
+    public static final String TOUR_DESCRIPTION = "tour_description";
+    public static final String TOUR_IMAGE = "tour_image";
+
     ArrayList<Artwork> artworkList = new ArrayList<Artwork>();
     String title;
     String description;
@@ -31,6 +37,13 @@ public class Tour implements Parcelable {
         description = in.readString();
         location = (LatLng) in.readValue(LatLng.class.getClassLoader());
         start = (Artwork) in.readValue(Artwork.class.getClassLoader());
+    }
+
+    public Tour(Intent intent) {
+        title = intent.getStringExtra(Tour.TOUR_NAME);
+        description = intent.getStringExtra(Tour.TOUR_DESCRIPTION);
+        // TODO: find out if we need this
+        // tourImage = intent.getParcelableExtra(Tour.TOUR_IMAGE);
     }
 
     public ArrayList<Artwork> getArtworkList() {

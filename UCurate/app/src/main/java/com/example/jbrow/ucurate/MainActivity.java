@@ -100,9 +100,14 @@ public class MainActivity extends AppCompatActivity
 
         loadFab();
 
+        Log.d("MainActivity", "onCreate entered");
+        FireBase.addUser("testUserID2", "newTestUser", "itsabio");
+
     }
 
     public void loadFab() {
+        Log.d("MainActivity", "loadFab entered");
+
         mainFab = (FloatingActionButton) findViewById(R.id.main_fab);
         mainFab.setClickable(true);
 
@@ -197,16 +202,17 @@ public class MainActivity extends AppCompatActivity
             Intent openTour = new Intent(MainActivity.this,ViewTourActivity.class);
             openTour.putParcelableArrayListExtra("artworks", artworks);
             startActivity(openTour);
-        }
 
-        switch (item.getItemId()) {
-            case R.id.sign_out_menu:
-                mFirebaseAuth.signOut();
-                //Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-
-                mUsername = ANONYMOUS;
-                startActivity(new Intent(this, Login.class));
-                return true;
+        } else if (id == R.id.use_camera) {
+            Intent openCamera = new Intent(MainActivity.this,CameraActivity.class);
+            startActivity(openCamera);
+        } else if (id == R.id.action_sample_edit_tour) {
+            Intent openEditTour = new Intent(MainActivity.this, EditTourActivity.class);
+            startActivity(openEditTour);
+        } else if (id == R.id.sign_out_menu) {
+            mFirebaseAuth.signOut();
+            mUsername = ANONYMOUS;
+            startActivity(new Intent(this, Login.class));
         }
 
         return super.onOptionsItemSelected(item);

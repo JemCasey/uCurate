@@ -12,22 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 import android.widget.BaseAdapter;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by charmipatel on 11/17/16.
  */
 
 public class ExploreItemAdapter extends BaseAdapter {
 
-    private final List<ExploreItem> mItems = new ArrayList<ExploreItem>();
+    private final List<Tour> mItems = new ArrayList<Tour>();
     private final Context mContext;
 
     public ExploreItemAdapter(Context context) {
         mContext = context;
     }
 
-    public void add(ExploreItem exploreItem) {
+    public void add(Tour exploreItem) {
         mItems.add(exploreItem);
         notifyDataSetChanged();
     }
@@ -50,7 +48,7 @@ public class ExploreItemAdapter extends BaseAdapter {
     }
 
     public View getView(int pos, View convertView, ViewGroup parent) {
-        ExploreItem exploreItem = (ExploreItem) getItem(pos);
+        Tour tour = (Tour) getItem(pos);
 
         RelativeLayout itemLayout = null;
 
@@ -60,14 +58,15 @@ public class ExploreItemAdapter extends BaseAdapter {
             itemLayout = (RelativeLayout) convertView;
         }
 
-        ImageView tourImage = (ImageView) itemLayout.findViewById(R.id.explore_tour_image);
-        tourImage.setImageBitmap(exploreItem.getTourImage());
+        // TODO: find out if we need this
+//        ImageView tourImage = (ImageView) itemLayout.findViewById(R.id.explore_tour_image);
+//        tourImage.setImageBitmap(exploreItem.getTourImage());
 
         TextView tourName = (TextView) itemLayout.findViewById(R.id.explore_tour_name);
-        tourName.setText(exploreItem.getName());
+        tourName.setText(tour.getTitle());
 
         TextView tourDescription = (TextView) itemLayout.findViewById(R.id.explore_tour_description);
-        tourDescription.setText(exploreItem.getDescription());
+        tourDescription.setText(tour.getDescription());
 
         itemLayout.setOnClickListener(new View.OnClickListener() {
             // start view tour activity

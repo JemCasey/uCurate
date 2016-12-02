@@ -16,6 +16,7 @@ public class Artwork implements Parcelable {
     String title;
     String description;
     LatLng location;
+    int id;
 
     public Artwork(String title, String description, LatLng location) {
         this.title = title;
@@ -92,5 +93,9 @@ public class Artwork implements Parcelable {
 
     public LatLng getLocation() {
         return location;
+    }
+
+    public int getId() {
+        return id;
     }
 }

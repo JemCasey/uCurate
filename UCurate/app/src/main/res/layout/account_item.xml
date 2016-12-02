@@ -13,7 +13,7 @@
         android:layout_marginLeft="17dp"
         android:layout_marginStart="17dp"
         android:layout_marginTop="19dp"
-        android:id="@+id/explore_tour_image" />
+        android:id="@+id/account_item_image" />
 
     <TextView
         android:text="TextView"
@@ -24,7 +24,7 @@
         android:layout_toEndOf="@+id/account_item_image"
         android:layout_marginLeft="78dp"
         android:layout_marginStart="78dp"
-        android:id="@+id/explore_tour_name" />
+        android:id="@+id/account_item_name" />
 
     <TextView
         android:text="TextView"
@@ -34,5 +34,5 @@
         android:layout_alignRight="@+id/account_item_name"
         android:layout_alignEnd="@+id/account_item_name"
         android:layout_marginTop="10dp"
-        android:id="@+id/explore_tour_description" />
+        android:id="@+id/account_item_description" />
 </RelativeLayout>
