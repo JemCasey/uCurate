@@ -19,6 +19,13 @@ public class User implements Parcelable {
         this.biography = biography;
     }
 
+    //copy constructor
+    // -Matt
+    public User(User other){
+        this.name = other.name;
+        this.biography = other.biography;
+    }
+
     protected User(Parcel in) {
         name = in.readString();
         biography = in.readString();
