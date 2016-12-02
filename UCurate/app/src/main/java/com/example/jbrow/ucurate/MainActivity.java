@@ -85,9 +85,14 @@ public class MainActivity extends AppCompatActivity
 
         loadFab();
 
+        Log.d("MainActivity", "onCreate entered");
+        FireBase.addUser("testUserID2", "newTestUser", "itsabio");
+
     }
 
     public void loadFab() {
+        Log.d("MainActivity", "loadFab entered");
+
         mainFab = (FloatingActionButton) findViewById(R.id.main_fab);
         mainFab.setClickable(true);
 

@@ -32,4 +32,7 @@
         completions."
     </string>
 
+    <!-- Strings related to user accounts -->
+    <string name="no_bio">No bio yet :(</string>
+
 </resources>
