@@ -29,6 +29,20 @@ public class Artwork implements Parcelable {
         this.image = image;
     }
 
+    //copy constructor
+    // -Matt
+    public Artwork(Artwork other){
+        this.title = other.title;
+        this.description = other.description;
+        this.location = other.location;
+    }
+    //basic constructor for testing
+    // -Matt
+    public Artwork(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
     protected Artwork(Parcel in) {
         image = (Bitmap) in.readValue(Bitmap.class.getClassLoader());
         title = in.readString();

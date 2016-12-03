@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "377639230663",
+    "firebase_url": "https://ucurate-bd111.firebaseio.com",
+    "project_id": "ucurate-bd111",
+    "storage_bucket": "ucurate-bd111.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377639230663:android:40664264bd025e70",
+        "android_client_info": {
+          "package_name": "com.example.jbrow.ucurate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "377639230663-ommj8chi9alb52te7buenk4hsg458h3e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jbrow.ucurate",
+            "certificate_hash": "46F8AE4AA77758F382E14A1FDDDAE80E1B4950F5"
+          }
+        },
+        {
+          "client_id": "377639230663-q5o9fbaao3bupe93dj5srrncokhl0p9u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jbrow.ucurate",
+            "certificate_hash": "8C5B07E79C01CEF9385A057BE4D2885F4492B916"
+          }
+        },
+        {
+          "client_id": "377639230663-v2kcn0berf0vm97cqo4avqnh6rjlgh7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyoRTWC7oe354ZJxMLF4QP9sk0njsxEjE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "377639230663-v2kcn0berf0vm97cqo4avqnh6rjlgh7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
