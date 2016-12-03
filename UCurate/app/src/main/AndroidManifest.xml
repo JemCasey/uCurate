@@ -70,6 +70,8 @@
         <activity android:name=".NewTourActivity" />
         <activity android:name=".AddToTourActivity" />
         <activity android:name=".EditTourActivity" />
+        <activity android:name=".ViewArtActivity" />
+        <activity android:name=".EditArtActivity"></activity>
     </application>
 
 </manifest>

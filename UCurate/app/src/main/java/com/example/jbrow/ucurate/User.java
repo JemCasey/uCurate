@@ -9,6 +9,9 @@ import java.util.ArrayList;
  */
 
 public class User implements Parcelable {
+
+    public static final String USER_ID = "user_id";
+
     String name;
     String biography;
     ArrayList<Artwork> artworkList = new ArrayList<Artwork>();

@@ -12,6 +12,12 @@ import com.google.android.gms.maps.model.LatLng;
  */
 
 public class Artwork implements Parcelable {
+
+    public static final String ARTWORK_NAME = "artwork_name";
+    public static final String ARTWORK_DESCRIPTION = "artwork_description";
+    public static final String ARTWORK_IMAGE = "artwork_image";
+    public static final String ARTWORK_ID = "artwork_id";
+
     Bitmap image;
     String title;
     String description;
