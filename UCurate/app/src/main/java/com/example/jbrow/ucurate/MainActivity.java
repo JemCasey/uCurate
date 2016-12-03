@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
 
     private FloatingActionButton mainFab;
     private FloatingActionButton addArtFab;
-    private FloatingActionButton addGalleryFab;
+    private FloatingActionButton addtourFab;
 
     private boolean isFabOpen;
 
@@ -116,8 +116,8 @@ public class MainActivity extends AppCompatActivity
         addArtFab = (FloatingActionButton) findViewById(R.id.add_art_fab);
         addArtFab.setClickable(false);
 
-        addGalleryFab = (FloatingActionButton) findViewById(R.id.add_gallery_fab);
-        addGalleryFab.setClickable(false);
+        addtourFab = (FloatingActionButton) findViewById(R.id.add_tour_fab);
+        addtourFab.setClickable(false);
 
         fabRotateCw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_cw);
         fabRotateCcw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_ccw);
@@ -142,10 +142,11 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        addGalleryFab.setOnClickListener(new View.OnClickListener() {
-            // start activity to add a gallery
+        addtourFab.setOnClickListener(new View.OnClickListener() {
+            // start activity to add a tour
             public void onClick(View view) {
-
+                Intent addTourIntent = new Intent(getApplicationContext(), NewTourActivity.class);
+                startActivity(addTourIntent);
             }
         });
 
@@ -159,8 +160,8 @@ public class MainActivity extends AppCompatActivity
             addArtFab.startAnimation(fabClose);
             addArtFab.setClickable(false);
 
-            addGalleryFab.startAnimation(fabClose);
-            addGalleryFab.setClickable(false);
+            addtourFab.startAnimation(fabClose);
+            addtourFab.setClickable(false);
         } else {
             mainFab.startAnimation(fabRotateCw);
 
@@ -168,8 +169,8 @@ public class MainActivity extends AppCompatActivity
             addArtFab.startAnimation(fabOpen);
             addArtFab.setClickable(true);
 
-            addGalleryFab.startAnimation(fabOpen);
-            addGalleryFab.setClickable(true);
+            addtourFab.startAnimation(fabOpen);
+            addtourFab.setClickable(true);
 
             isFabOpen = true;
         }
