@@ -31,6 +31,28 @@ public class Tour implements Parcelable {
         this.start = artworkList.get(0);
     }
 
+    //copy constructor
+    // -Matt
+    public Tour(Tour other){
+        this.artworkList = new ArrayList<Artwork>();
+        for (Artwork a : other.artworkList){
+            this.artworkList.add(a);
+        }
+        this.title = other.title;
+        this.description = other.description;
+        this.location = other.location;
+        this.start = other.start;
+    }
+    //constructor for empty tour, no list of artwork yet
+    //I may very well have missed an important instantiation,
+    //feel free to change this, it's just for testing in a world
+    //were lists of artwork are hard to come by.
+    // -Matt
+    public Tour(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
     protected Tour(Parcel in) {
         artworkList = in.createTypedArrayList(Artwork.CREATOR);
         title = in.readString();

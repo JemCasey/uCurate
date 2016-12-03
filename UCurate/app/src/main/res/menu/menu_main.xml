@@ -12,4 +12,19 @@
         android:orderInCategory="100"
         android:title="Sample Tour"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/use_camera"
+        android:orderInCategory="100"
+        android:title="Use Camera"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sample_edit_tour"
+        android:orderInCategory="100"
+        android:title="Sample Edit Tour"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sign_out_menu"
+        android:orderInCategory="100"
+        android:title="Sign Out"
+        app:showAsAction="never" />
 </menu>
