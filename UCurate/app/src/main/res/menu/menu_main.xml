@@ -27,4 +27,9 @@
         android:orderInCategory="100"
         android:title="Sign Out"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sample_share"
+        android:orderInCategory="100"
+        android:title="Sample Share"
+        app:showAsAction="never" />
 </menu>

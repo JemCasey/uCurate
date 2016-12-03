@@ -215,6 +215,9 @@ public class MainActivity extends AppCompatActivity
             mFirebaseAuth.signOut();
             mUsername = ANONYMOUS;
             startActivity(new Intent(this, Login.class));
+        } else if (id == R.id.action_sample_share) {
+            Intent openShare = new Intent(MainActivity.this, ShareActivity.class);
+            startActivity(openShare);
         }
 
         return super.onOptionsItemSelected(item);
