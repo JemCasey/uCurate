@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         implements OnFragmentInteractionListener {
 
     private static final String ANONYMOUS = "None";
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -105,6 +107,18 @@ public class MainActivity extends AppCompatActivity
         FireBase.addTour("userIDtest4", new Tour("testTour3","testTourDesc3"));
         FireBase.addArtwork("userID1", new Artwork("testArt","testArtDesc"));
 
+    }
+
+    // Handles result from a call to device's native Camera Activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            //TODO: send imageBitmap to EditArtActivity
+
+        }
     }
 
     public void loadFab() {
@@ -206,8 +220,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(openTour);
 
         } else if (id == R.id.use_camera) {
-            Intent openCamera = new Intent(MainActivity.this,CameraActivity.class);
-            startActivity(openCamera);
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+
         } else if (id == R.id.action_sample_edit_tour) {
             Intent openEditTour = new Intent(MainActivity.this, EditTourActivity.class);
             startActivity(openEditTour);
