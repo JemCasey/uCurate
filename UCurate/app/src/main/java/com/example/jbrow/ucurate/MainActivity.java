@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         loadFab();
 
         Log.d("MainActivity", "onCreate entered");
-        FireBase.addUser("userIDtest3", new User("nametest3", "biotest3"));
+        FireBase.addUser("userIDtest4", new User("nametest4", "biotest4"));
         FireBase.addTour("userIDtest4", new Tour("testTour3","testTourDesc3"));
         FireBase.addArtwork("userID1", new Artwork("testArt","testArtDesc"));
 
