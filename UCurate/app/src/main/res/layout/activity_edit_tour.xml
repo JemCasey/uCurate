@@ -9,29 +9,57 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context="com.example.jbrow.ucurate.EditTourActivity">
     <TextView
         android:id="@+id/edit_tour_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tour Name Goes Here"
+        android:text=""
         android:gravity="center"
         android:textSize="20dp" />
+    <TextView
+        android:id="@+id/edit_tour_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="center"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Click and drag artworks to reorder them"
+        android:id="@+id/drag_instructions"
         android:ellipsize="end"
         android:padding="20dp"
+        android:textSize="10dp"
         />
-    <com.woxthebox.draglistview.DragListView
+<!--    <com.woxthebox.draglistview.DragListView
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:id="@+id/drag_list_view"></com.woxthebox.draglistview.DragListView>
-    <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/drag_list_view"></com.woxthebox.draglistview.DragListView>-->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add artworks to tour"
-        android:id="@+id/add_art_to_tour"
-        />
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Add Art to Tour"
+            android:id="@+id/add_art_to_tour"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Save Tour"
+            android:id="@+id/save_tour"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="View Tour on Map"
+            android:id="@+id/view_tour"
+            />
+    </LinearLayout>
+
 </LinearLayout>
