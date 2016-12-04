@@ -98,7 +98,6 @@
 
 
         <activity android:name=".ShareActivity"></activity>
-        <activity android:name=".ViewArtActivity" />
         <activity android:name=".EditArtActivity"></activity>
 
     </application>

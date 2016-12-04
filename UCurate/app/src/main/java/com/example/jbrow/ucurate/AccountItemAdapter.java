@@ -2,6 +2,9 @@ package com.example.jbrow.ucurate;
 
 import android.accounts.Account;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,32 +24,56 @@ import java.util.List;
  */
 
 public class AccountItemAdapter extends BaseAdapter implements Filterable {
-    private final List<AccountItem> mItems = new ArrayList<AccountItem>(); // all items
-    private List<AccountItem> mDisplayItems = new ArrayList<AccountItem>(); // displayed items
+    private List<Object> mItems = new ArrayList<Object>(); // all items
+    //private List<AccountItem> mDisplayItems = new ArrayList<AccountItem>(); // displayed items
     private final Context mContext;
+    private final String mUserId;
 
-    public AccountItemAdapter(Context context) {
+    public AccountItemAdapter(Context context, String userId) {
         mContext = context;
+        mUserId = userId;
     }
 
-    public void add(AccountItem accountItem) {
-        mItems.add(accountItem);
-        mDisplayItems.add(accountItem);
+    public void add(Object item) {
+        mItems.add(item);
+//        mDisplayItems.add(accountItem);
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Object> items) {
+//        mDisplayItems.addAll(accountItems);
+        mItems.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    public void addAllTours(List<Tour> tourItems) {
+        for (int i = 0; i < tourItems.size(); i++) {
+            mItems.add((Object) tourItems.get(i));
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addAllArtwork(List<Artwork> artworkItems) {
+        for (int i = 0; i < artworkItems.size(); i++) {
+            mItems.add((Object) artworkItems.get(i));
+        }
         notifyDataSetChanged();
     }
 
     public void clear() {
         mItems.clear();
-        mDisplayItems.clear();
+//        mDisplayItems.clear();
         notifyDataSetChanged();
     }
 
     public int getCount() {
-        return mDisplayItems.size();
+//        return mDisplayItems.size();
+        return mItems.size();
     }
 
     public Object getItem(int pos) {
-        return mDisplayItems.get(pos);
+//        return mDisplayItems.get(pos);
+        return mItems.get(pos);
     }
 
     public long getItemId(int pos) {
@@ -53,7 +81,24 @@ public class AccountItemAdapter extends BaseAdapter implements Filterable {
     }
 
     public View getView(int pos, View convertView, ViewGroup parent) {
-        AccountItem accountItem = (AccountItem) getItem(pos);
+        final Object item = (Object) getItem(pos);
+
+        Bitmap image = null;
+        String title = null;
+        String description = null;
+
+        if (item instanceof Artwork) {
+            image = ((Artwork) item).getImage();
+            title = ((Artwork) item).getTitle();
+            description = ((Artwork) item).getDescription();
+        } else if (item instanceof Tour) {
+            image = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_place_black_24dp);
+            title = ((Tour) item).getTitle();
+            description = ((Tour) item).getDescription();
+        } else {
+            // TODO: so hacky..is there a better way?
+            Toast.makeText(mContext, "Help", Toast.LENGTH_LONG);
+        }
 
         RelativeLayout itemLayout = null;
 
@@ -63,19 +108,32 @@ public class AccountItemAdapter extends BaseAdapter implements Filterable {
             itemLayout = (RelativeLayout) convertView;
         }
 
-        ImageView image = (ImageView) itemLayout.findViewById(R.id.account_item_image);
-        image.setImageBitmap(accountItem.getImage());
+        ImageView imageView = (ImageView) itemLayout.findViewById(R.id.account_item_image);
+        imageView.setImageBitmap(image);
 
-        TextView name = (TextView) itemLayout.findViewById(R.id.account_item_name);
-        name.setText(accountItem.getName());
+        TextView titleView = (TextView) itemLayout.findViewById(R.id.account_item_name);
+        titleView.setText(title);
 
-        TextView description = (TextView) itemLayout.findViewById(R.id.account_item_description);
-        description.setText(accountItem.getDescription());
+        TextView descriptionView = (TextView) itemLayout.findViewById(R.id.account_item_description);
+        descriptionView.setText(description);
 
         itemLayout.setOnClickListener(new View.OnClickListener() {
             // start view image/tour activity
             public void onClick(View view) {
-
+                if (item instanceof Artwork) {
+                    String artworkId = ((Artwork) item).getId();
+                    Intent viewArtworkIntent = new Intent(mContext, ViewArtActivity.class);
+                    viewArtworkIntent.putExtra(Artwork.ARTWORK_ID, artworkId);
+                    mContext.startActivity(viewArtworkIntent);
+                } else if (item instanceof Tour) {
+                    String tourId = ((Tour) item).getId();
+                    Intent viewTourIntent = new Intent(mContext, ViewTourActivity.class);
+                    viewTourIntent.putExtra(Tour.TOUR_ID, tourId);
+                    mContext.startActivity(viewTourIntent);
+                } else {
+                    // TODO: so hacky..is there a better way?
+                    Toast.makeText(mContext, "Help", Toast.LENGTH_LONG);
+                }
             }
         });
 
@@ -90,17 +148,28 @@ public class AccountItemAdapter extends BaseAdapter implements Filterable {
                 String filterString = constraint.toString().toLowerCase();
                 FilterResults filterResults = new FilterResults();
 
-                List<AccountItem> filteredList = new ArrayList<AccountItem>();
+                List<Object> filteredList = new ArrayList<Object>();
 
                 int itemCount = mItems.size();
 
                 for (int i = 0; i < itemCount; i++) {
-                    AccountItem current = mItems.get(i);
+                    Object current = mItems.get(i);
 
-                    String name = current.getName().toLowerCase();
-                    String description = current.getDescription().toLowerCase();
+                    String title = null;
+                    String description = null;
 
-                    if (name.contains(filterString) || description.contains(filterString)) {
+                    if (current instanceof Artwork) {
+                        title = ((Artwork) current).getTitle().toLowerCase();
+                        description = ((Artwork) current).getDescription().toLowerCase();
+                    } else if (current instanceof Tour) {
+                        title = ((Tour) current).getTitle();
+                        description = ((Tour) current).getDescription();
+                    } else {
+                        // TODO: so hacky..is there a better way?
+                        Toast.makeText(mContext, "Help", Toast.LENGTH_LONG);
+                    }
+
+                    if (title.contains(filterString) || description.contains(filterString)) {
                         filteredList.add(current);
                     }
                 }
@@ -113,7 +182,7 @@ public class AccountItemAdapter extends BaseAdapter implements Filterable {
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                mDisplayItems = (ArrayList<AccountItem>) results.values;
+                mItems = (ArrayList<Object>) results.values;
                 notifyDataSetChanged();
             }
         };

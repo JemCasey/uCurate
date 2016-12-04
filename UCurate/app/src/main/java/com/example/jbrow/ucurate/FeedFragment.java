@@ -28,7 +28,9 @@ public class FeedFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mFeedItemAdapter = new FeedItemAdapter(getActivity().getApplicationContext());
+        String userId = getArguments().getString(User.USER_ID);
+
+        mFeedItemAdapter = new FeedItemAdapter(getActivity().getApplicationContext(), userId);
 
     }
 
@@ -36,19 +38,21 @@ public class FeedFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
+
+        // TODO: get data from database
+//        List<FeedItem> data = null; // get data
+//        mFeedItemAdapter.addAll(data);
         setListAdapter(mFeedItemAdapter);
 
         swipeDownContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeDownContainer);
         swipeDownContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // get data again
-                // do stuff and then return
-                mFeedItemAdapter.clear();
-
                 // get new data
+                // TODO: get data from database
                 List<FeedItem> newData = null; // get data
-                mFeedItemAdapter.addAll(newData);
+                mFeedItemAdapter.clear();
+                //mFeedItemAdapter.addAll(newData);
                 swipeDownContainer.setRefreshing(false);
             }
         });

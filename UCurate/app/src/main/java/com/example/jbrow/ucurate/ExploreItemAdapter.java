@@ -1,6 +1,7 @@
 package com.example.jbrow.ucurate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,11 @@ public class ExploreItemAdapter extends BaseAdapter {
 
     private final List<Tour> mItems = new ArrayList<Tour>();
     private final Context mContext;
+    private final String mUserId;
 
-    public ExploreItemAdapter(Context context) {
+    public ExploreItemAdapter(Context context, String userId) {
         mContext = context;
+        mUserId = userId;
     }
 
     public void add(Tour exploreItem) {
@@ -49,6 +52,7 @@ public class ExploreItemAdapter extends BaseAdapter {
 
     public View getView(int pos, View convertView, ViewGroup parent) {
         Tour tour = (Tour) getItem(pos);
+        final String tourId = tour.getId();
 
         RelativeLayout itemLayout = null;
 
@@ -58,9 +62,7 @@ public class ExploreItemAdapter extends BaseAdapter {
             itemLayout = (RelativeLayout) convertView;
         }
 
-        // TODO: find out if we need this
-//        ImageView tourImage = (ImageView) itemLayout.findViewById(R.id.explore_tour_image);
-//        tourImage.setImageBitmap(exploreItem.getTourImage());
+        ImageView tourImage = (ImageView) itemLayout.findViewById(R.id.explore_tour_image);
 
         TextView tourName = (TextView) itemLayout.findViewById(R.id.explore_tour_name);
         tourName.setText(tour.getTitle());
@@ -71,7 +73,10 @@ public class ExploreItemAdapter extends BaseAdapter {
         itemLayout.setOnClickListener(new View.OnClickListener() {
             // start view tour activity
             public void onClick(View view) {
-
+                Intent viewTourIntent = new Intent(mContext, EditTourActivity.class);
+                viewTourIntent.putExtra(Tour.TOUR_ID, tourId);
+                viewTourIntent.putExtra(User.USER_ID, mUserId);
+                mContext.startActivity(viewTourIntent);
             }
         });
 

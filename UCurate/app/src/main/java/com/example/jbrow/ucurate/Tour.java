@@ -18,6 +18,7 @@ public class Tour implements Parcelable {
     public static final String TOUR_NAME = "tour_name";
     public static final String TOUR_DESCRIPTION = "tour_description";
     public static final String TOUR_IMAGE = "tour_image";
+    public static final String TOUR_ID = "tour_id";
 
     ArrayList<Artwork> artworkList = new ArrayList<Artwork>();
     String title;
