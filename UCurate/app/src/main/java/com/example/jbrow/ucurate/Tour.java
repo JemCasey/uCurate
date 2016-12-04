@@ -61,6 +61,7 @@ public class Tour implements Parcelable {
     public Tour(String title, String description, String UserId) {
         this.title = title;
         this.description = description;
+        this.userID = UserId;
     }
 
     protected Tour(Parcel in) {
