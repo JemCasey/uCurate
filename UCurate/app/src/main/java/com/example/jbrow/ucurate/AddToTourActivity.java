@@ -29,13 +29,14 @@ public class AddToTourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_tour);
         Intent intent = getIntent();
-        String userID = intent.getStringExtra("userID");
+        String userID = intent.getStringExtra(User.USER_ID);
 
         //Todo use Firebase method to get all artworks
-        ArrayList<Artwork> artworks = new ArrayList();
+        ArrayList<Artwork> artworks = FireBase.getUserArtwork(userID);
 
         dataAdapter = new ArtAdapter(this, R.layout.tour_item, artworks);
         ListView listView = (ListView) findViewById(R.id.listView1);
+
         // Assign adapter to ListView
         listView.setAdapter(dataAdapter);
 
