@@ -1,4 +1,5 @@
 package com.example.jbrow.ucurate;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +44,7 @@ public final class FireBase {
     public static ArrayList<Tour> tourArrayList = new ArrayList<Tour>();
     public static LimitedSizeQueue<Artwork> artworkQueue = new LimitedSizeQueue<Artwork>(10);
     public static LimitedSizeQueue<Tour> tourQueue = new LimitedSizeQueue<Tour>(10) ;
-    public static PriorityQueue<Object> artworkTourPQ = new PriorityQueue<Object>();
+    public static ArrayList<Object> artworkTourArrayList = new ArrayList<>(10);
 
 
     FireBase() {}
@@ -50,9 +52,11 @@ public final class FireBase {
     public static class LimitedSizeQueue<K> extends ArrayList<K> {
 
         private int maxSize;
+        private static int youngestCounter;
 
         public LimitedSizeQueue(int size){
             this.maxSize = size;
+            this.youngestCounter = size-1;
         }
 
         public boolean add(K k){
@@ -64,11 +68,19 @@ public final class FireBase {
         }
 
         public K getYongest() {
+            youngestCounter = maxSize-1;
             return get(size() - 1);
         }
 
         public K getOldest() {
             return get(0);
+        }
+
+        public K getNextYoungest() {
+            if (youngestCounter < 0)
+                return null;
+            youngestCounter--;
+            return get(youngestCounter);
         }
     }
 
@@ -123,13 +135,15 @@ public final class FireBase {
         DatabaseReference toursRef = ref.child("tours");
         tourID = toursRef.child(userid).push().getKey();
         toursRef.child(userid).child(tourID).setValue(newTour);
+        toursRef.child(userid).child(tourID).child("id").setValue(tourID);
+        toursRef.child(userid).child(tourID).child("timeCreated").setValue(new Date());
 
         return tourID;
     }
 
 
     //adds an artwork to the database
-    public static String addArtwork(String userid, Artwork art) {
+    public static String addArtwork(String userid, Artwork art, Bitmap bitmap) {
         Log.d(TAG, "entered addArtwork");
         Artwork newArt = new Artwork(art);
         if (userid == null || userid.equals("")) {
@@ -145,8 +159,13 @@ public final class FireBase {
         DatabaseReference ref = database.getReference();
         DatabaseReference artsRef = ref.child("artwork");
         artworkID = artsRef.child(userid).push().getKey();
+        art.id = artworkID;
+        art.uploadArtwork(bitmap);
         artsRef.child(userid).child(artworkID).setValue(newArt);
-        
+        artsRef.child(userid).child(artworkID).child("id").setValue(artworkID);
+        artsRef.child(userid).child(artworkID).child("timeCreated").setValue(new Date());
+
+
         return artworkID;
     }
 
@@ -262,7 +281,8 @@ public final class FireBase {
         return currUser.getBiography();
     }
 
-    public static boolean changeUserArtwork(String userID, ArrayList<Artwork> newAddedArtwork){
+
+    public static boolean changeUserArtwork(String userID, String artworkID, ArrayList<Artwork> newAddedArtwork){
         Log.d(TAG, "entered changeUserArtwork");
 
         if (userID == null || userID.equals("")) {
@@ -272,12 +292,12 @@ public final class FireBase {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
         DatabaseReference usersRef = ref.child("users");
-        usersRef.child(userID).child("artworkList").setValue(newAddedArtwork);
+        usersRef.child(userID).child("artworkList").child(artworkID).setValue(newAddedArtwork);
 
         return true;
     }
 
-    public static boolean changeUserTour(String userID, ArrayList<Tour> newAddedTour){
+    public static boolean changeUserTour(String userID, String tourID, ArrayList<Tour> newAddedTour){
         Log.d(TAG, "entered changeUserTour");
 
         if (userID == null || userID.equals("")) {
@@ -287,15 +307,14 @@ public final class FireBase {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
         DatabaseReference usersRef = ref.child("users");
-        usersRef.child(userID).child("tourList").setValue(newAddedTour);
+        usersRef.child(userID).child("tourList").child(tourID).setValue(newAddedTour);
 
         return true;
     }
 
 
-    public static PriorityQueue<Object> getRecent10() {
+    public static ArrayList<Object> getRecent10() {
         Log.d(TAG, "entered getRecent10");
-
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference artworkRef = database.getReference("artwork");
@@ -329,8 +348,21 @@ public final class FireBase {
             }
         });
 
+        Tour currTour = tourQueue.getNextYoungest();
+        Artwork currArtwork = artworkQueue.getNextYoungest();
+        artworkTourArrayList.clear();
+        while (artworkTourArrayList.size() != 10) {
+            if (currTour.getDate().compareTo(currArtwork.getDate()) <= 0) {
+                artworkTourArrayList.add(currArtwork);
+                currArtwork = artworkQueue.getNextYoungest();
+            }
+            else {
+                artworkTourArrayList.add(currTour);
+                currTour = tourQueue.getNextYoungest();
+            }
+        }
 
-        return artworkTourPQ;
+        return artworkTourArrayList;
     }
 
     public static ArrayList<Tour> getTours(){

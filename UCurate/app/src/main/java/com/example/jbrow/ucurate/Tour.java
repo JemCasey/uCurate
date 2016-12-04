@@ -61,6 +61,7 @@ public class Tour implements Parcelable {
     public Tour(String title, String description, String UserId) {
         this.title = title;
         this.description = description;
+        this.userID = UserId;
     }
 
     protected Tour(Parcel in) {
@@ -158,4 +159,6 @@ public class Tour implements Parcelable {
     
     public void setId(String id) { this.id = id; }
     public void setDate(Date date) { this.timeCreated = date; }
+
+    public Date getDate() { return timeCreated;}
 }
