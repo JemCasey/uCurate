@@ -10,13 +10,17 @@ import android.support.v4.app.ListFragment;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.List;
 
 
 public class AccountFragment extends ListFragment {
 
     AccountItemAdapter mAccountItemAdapter;
+    User user;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -26,7 +30,10 @@ public class AccountFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAccountItemAdapter = new AccountItemAdapter(getActivity().getApplicationContext());
+        String userId = getArguments().getString(User.USER_ID);
+        mAccountItemAdapter = new AccountItemAdapter(getActivity().getApplicationContext(), userId);
+        // TODO: add when firebase functionality added
+//      user = FireBase.getUser(userId);
     }
 
     @Override
@@ -37,20 +44,29 @@ public class AccountFragment extends ListFragment {
 
         setListAdapter(mAccountItemAdapter);
 
-        //User user = null; // getUser();
 
 //        TextView username = (TextView) view.findViewById(R.id.username);
 //        username.setText(user.getName());
 //
 //        TextView userBio = (TextView) view.findViewById(R.id.user_bio);
 //        userBio.setText(user.getBiography());
+//
+//        ImageView userImage = (ImageView) view.findViewById(R.id.user_image);
+//        userImage.setImageBitmap(user.getUserImage());
 
+        addTypeSpinner(view);
+        //addSortBySpinner(view);
+        addSearchBox(view);
 
-        // drop down for artwork vs tours
+        return view;
+    }
+
+    // drop down for artwork vs tours
+    private void addTypeSpinner(View view) {
         Spinner typeSpinner = (Spinner) view.findViewById(R.id.item_type);
         ArrayAdapter<CharSequence> typeAdapter =
                 ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
-                R.array.item_types, android.R.layout.simple_spinner_item);
+                        R.array.item_types, android.R.layout.simple_spinner_item);
         typeSpinner.setAdapter(typeAdapter);
 
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -58,10 +74,18 @@ public class AccountFragment extends ListFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 1:
+                        // clear all items
+                        mAccountItemAdapter.clear();
                         // list only tours
+                        // TODO: get tours from database;
+                        List<Tour> allTours = user.getTourList();
+                        mAccountItemAdapter.addAllTours(allTours);
                         return;
                     default:
                         // list only paintings
+                        mAccountItemAdapter.clear();
+                        List<Artwork> allArtwork = user.getArtworkList();
+                        mAccountItemAdapter.addAllArtwork(allArtwork);
                         return;
                 }
             }
@@ -70,12 +94,14 @@ public class AccountFragment extends ListFragment {
                 // Another interface callback
             }
         });
+    }
 
-        // drop down for sort by options
+    // drop down for sort by options
+    private void addSortBySpinner(View view) {
         Spinner sortSpinner = (Spinner) view.findViewById(R.id.sort_by);
         ArrayAdapter<CharSequence> sortAdapter =
                 ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
-                R.array.sort_by_values, android.R.layout.simple_spinner_item);
+                        R.array.sort_by_values, android.R.layout.simple_spinner_item);
         sortSpinner.setAdapter(sortAdapter);
 
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -98,7 +124,9 @@ public class AccountFragment extends ListFragment {
                 // Another interface callback
             }
         });
+    }
 
+    private void addSearchBox(View view) {
         // search box
         EditText searchBox = (EditText) view.findViewById(R.id.search_box);
         searchBox.addTextChangedListener(new TextWatcher() {
@@ -117,7 +145,5 @@ public class AccountFragment extends ListFragment {
 
             }
         });
-
-        return view;
     }
 }

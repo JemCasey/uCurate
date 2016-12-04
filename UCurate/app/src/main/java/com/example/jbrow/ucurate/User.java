@@ -1,5 +1,6 @@
 package com.example.jbrow.ucurate;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.ArrayList;
@@ -11,9 +12,13 @@ import java.util.ArrayList;
 public class User implements Parcelable {
 
     public static final String USER_ID = "user_id";
+    public static final String USER_NAME = "user_name";
+    public static final String USER_BIO = "user_bio";
+    public static final String USER_IMAGE = "user_image";
 
     String name;
     String biography;
+    Bitmap userImage;
     ArrayList<Artwork> artworkList = new ArrayList<Artwork>();
     ArrayList<Tour> tourList = new ArrayList<Tour>();
 
@@ -29,6 +34,7 @@ public class User implements Parcelable {
     public User(User other){
         this.name = other.name;
         this.biography = other.biography;
+        this.userImage = other.userImage;
     }
 
     protected User(Parcel in) {
@@ -77,6 +83,12 @@ public class User implements Parcelable {
 
     public void setBiography(String biography) {
         this.biography = biography;
+    }
+
+    public Bitmap getUserImage() { return userImage; }
+
+    public void setUserImage(Bitmap userImage) {
+        this.userImage = userImage;
     }
 
     public ArrayList<Artwork> getArtworkList() {

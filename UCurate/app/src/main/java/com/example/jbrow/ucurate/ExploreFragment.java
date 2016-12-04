@@ -21,7 +21,9 @@ public class ExploreFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mExploreItemAdapter = new ExploreItemAdapter(getActivity().getApplicationContext());
+        String userId = getArguments().getString(User.USER_ID);
+
+        mExploreItemAdapter = new ExploreItemAdapter(getActivity().getApplicationContext(), userId);
     }
 
     @Override
