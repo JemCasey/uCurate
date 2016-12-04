@@ -39,7 +39,7 @@ public class ShareActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
-        shareArt = new Artwork("Betty", "this is by Gerhard Richter", new LatLng(38.99, -76.947760), BitmapFactory.decodeResource(getResources(),R.drawable.betty));
+        shareArt = new Artwork("Betty", "this is by Gerhard Richter", new LatLng(38.99, -76.947760), "blah", BitmapFactory.decodeResource(getResources(),R.drawable.betty));
 
         ImageView image = (ImageView) findViewById(R.id.share_image);
         image.setImageBitmap(shareArt.getImage());

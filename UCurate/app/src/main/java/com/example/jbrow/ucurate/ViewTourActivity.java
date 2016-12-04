@@ -74,6 +74,7 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
         setContentView(R.layout.activity_view_tour);
         artworks = new ArrayList<>();
         Intent intent = getIntent();
+        String userID = intent.getStringExtra("userID");
         ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra("artworks");
         for (Parcelable curr : parcelables) {
             Artwork temp = (Artwork) curr;

@@ -22,17 +22,20 @@ public class Artwork implements Parcelable {
     String title;
     String description;
     LatLng location;
+    String userID;
     int id;
 
-    public Artwork(String title, String description, LatLng location) {
+    public Artwork(String title, String description, LatLng location, String userID) {
         this.title = title;
         this.description = description;
         this.location = location;
+        this.userID = userID;
     }
 
-    public Artwork(String title, String description, LatLng location, Bitmap image) {
-        this(title, description, location);
+    public Artwork(String title, String description, LatLng location, String userID, Bitmap image) {
+        this(title, description, location, userID);
         this.image = image;
+        this.userID = userID;
     }
 
     //copy constructor
@@ -102,6 +105,8 @@ public class Artwork implements Parcelable {
 
         return image;
     }
+
+    public String getUserID() { return userID; }
 
     public String getTitle() {
         return title;
