@@ -51,8 +51,8 @@ public class EditArtActivity extends AppCompatActivity {
         }
         final Bitmap finalImage = image;
 
-//        ImageView editArtImage = (ImageView) findViewById(R.id.view_art_image);
-//        editArtImage.setImageBitmap(image);
+        ImageView editArtImage = (ImageView) findViewById(R.id.edit_art_image);
+        editArtImage.setImageBitmap(image);
 
         final EditText editArtTitle = (EditText) findViewById(R.id.edit_art_title);
         final EditText editArtDescription = (EditText) findViewById(R.id.edit_art_description);
