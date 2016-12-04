@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,12 +99,12 @@ public final class FireBase {
     }
 
     //Adds a tour to the database
-    public static boolean addTour(String userid, Tour tour) {
+    public static String addTour(String userid, Tour tour) {
         Log.d(TAG, "entered addTour");
         Tour newTour = new Tour(tour);
 
         if (userid == null || userid.equals("")){
-            return false;
+            return null;
         }
         if (newTour.start == null){
             //TODO uncomment once we're adding real tours
@@ -124,16 +125,16 @@ public final class FireBase {
         tourID = toursRef.child(userid).push().getKey();
         toursRef.child(userid).child(tourID).setValue(newTour);
 
-        return true;
+        return tourID;
     }
 
 
     //adds an artwork to the database
-    public static boolean addArtwork(String userid, Artwork art) {
+    public static String addArtwork(String userid, Artwork art) {
         Log.d(TAG, "entered addArtwork");
         Artwork newArt = new Artwork(art);
         if (userid == null || userid.equals("")) {
-            return false;
+            return null;
         }
         if (newArt.location == null) {
             //TODO uncomment once we're storing actual artworks
@@ -146,9 +147,11 @@ public final class FireBase {
         DatabaseReference artsRef = ref.child("artwork");
         artworkID = artsRef.child(userid).push().getKey();
         artsRef.child(userid).child(artworkID).setValue(newArt);
+        artsRef.child(userid).child(artworkID).child("id").setValue(artworkID);
+        artsRef.child(userid).child(artworkID).child("timeCreated").setValue(new Date());
 
 
-        return true;
+        return artworkID;
     }
 
 
@@ -254,7 +257,7 @@ public final class FireBase {
         return currUser.getBiography();
     }
 
-    public static boolean changeUserArtwork(String userID, ArrayList<Artwork> newAddedArtwork){
+    public static boolean changeUserArtwork(String userID, String artworkID, ArrayList<Artwork> newAddedArtwork){
         Log.d(TAG, "entered changeUserName");
 
         if (userID == null || userID.equals("")) {
@@ -264,12 +267,12 @@ public final class FireBase {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
         DatabaseReference usersRef = ref.child("users");
-        usersRef.child(userID).child("artworkList").setValue(newAddedArtwork);
+        usersRef.child(userID).child("artworkList").child(artworkID).setValue(newAddedArtwork);
 
         return true;
     }
 
-    public static boolean changeUserTour(String userID, ArrayList<Tour> newAddedTour){
+    public static boolean changeUserTour(String userID, String tourID, ArrayList<Tour> newAddedTour){
         Log.d(TAG, "entered changeUserName");
 
         if (userID == null || userID.equals("")) {
@@ -279,7 +282,7 @@ public final class FireBase {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
         DatabaseReference usersRef = ref.child("users");
-        usersRef.child(userID).child("tourList").setValue(newAddedTour);
+        usersRef.child(userID).child("tourList").child(tourID).setValue(newAddedTour);
 
         return true;
     }
