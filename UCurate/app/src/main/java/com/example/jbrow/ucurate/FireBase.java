@@ -146,8 +146,7 @@ public final class FireBase {
         DatabaseReference artsRef = ref.child("artwork");
         artworkID = artsRef.child(userid).push().getKey();
         artsRef.child(userid).child(artworkID).setValue(newArt);
-
-
+        
         return artworkID;
     }
 
