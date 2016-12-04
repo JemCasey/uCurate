@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -44,6 +45,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     //Testing Image File Transfer Functionality
     private Uri uri;
     private File imgFile;
+    private ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,9 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 // ...
             }
         };
+
+        //Test Image Transfer
+        logo = (ImageView) findViewById(R.id.logo);
     }
 
     @Override
