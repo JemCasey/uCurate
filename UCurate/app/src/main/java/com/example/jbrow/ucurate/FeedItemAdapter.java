@@ -27,6 +27,11 @@ public class FeedItemAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void addAll(List<FeedItem> feedItems) {
+        mItems.addAll(feedItems);
+        notifyDataSetChanged();
+    }
+
     public void clear() {
         mItems.clear();
         notifyDataSetChanged();
