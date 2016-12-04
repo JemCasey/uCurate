@@ -26,18 +26,17 @@ public class Artwork implements Parcelable {
     LatLng location;
     String userID;
     String id;
-    Date creationDate;
+    Date timeCreated;
 
-    public Artwork(String title, String description, LatLng location, String userID, Date date) {
+    public Artwork(String title, String description, LatLng location, String userID) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.userID = userID;
-        this.creationDate = date;
     }
 
-    public Artwork(String title, String description, LatLng location, String userID, Bitmap image, Date date) {
-        this(title, description, location, userID, date);
+    public Artwork(String title, String description, LatLng location, String userID, Bitmap image) {
+        this(title, description, location, userID);
         this.image = image;
     }
 
@@ -125,5 +124,17 @@ public class Artwork implements Parcelable {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setDate(Date date) {
+        this.timeCreated = date;
+    }
+
+    public Date getDate() {
+        return timeCreated;
     }
 }
