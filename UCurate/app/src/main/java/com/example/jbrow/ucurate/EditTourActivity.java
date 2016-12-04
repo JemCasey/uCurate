@@ -26,7 +26,9 @@ public class EditTourActivity extends Activity {
     ArrayList<Artwork> mItemArray;
     TourItemAdapter listAdapter;
     boolean saved = false;
+    boolean isNew = true;
     String userID;
+    String tourID;
     Tour tour;
 
     @Override
@@ -42,14 +44,16 @@ public class EditTourActivity extends Activity {
         TextView descriptionText = (TextView) findViewById(R.id.edit_tour_description);
 
         if (tourName == null) {
+            isNew = false;
             saved = true;
-            String tourID = intent.getStringExtra("tour_id");
-            Tour tour = FireBase.getTour(userID, tourID);
+            tourID = intent.getStringExtra("tour_id");
+            tour = FireBase.getTour(userID, tourID);
             titleText.setText(tour.getTitle());
             descriptionText.setText(tour.getDescription());
         } else {
             titleText.setText(tourName);
             descriptionText.setText(tourDescription);
+            tour = new Tour(tourName, tourDescription, userID);
         }
 
         mDragListView = (DragListView) findViewById(R.id.drag_list_view);
@@ -104,8 +108,14 @@ public class EditTourActivity extends Activity {
             saveTour.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (isNew) {
+                        //Todo needs to get ID
+                        FireBase.addTour(userID, tour);
+                    } else {
+                        //FireBase.changeUserTour(userID, tourID, tour.getArtworkList());
+                    }
                     saved = true;
-                    //FireBase.changeUserTour(userID, tour.getId(), tour.getArtworkList());
+                    isNew = false;
                 }
             });
         }
@@ -118,7 +128,7 @@ public class EditTourActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "Please save the tour before viewing on map", Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent = new Intent(EditTourActivity.this, ViewTourActivity.class);
-                    intent.putExtra(Tour.TOUR_ID, tour.getId());
+                    intent.putExtra(Tour.TOUR_ID, tourID);
                     intent.putExtra(User.USER_ID, userID);
                     startActivity(intent);
                 }

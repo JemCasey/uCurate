@@ -31,7 +31,7 @@ public class AddToTourActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String userID = intent.getStringExtra(User.USER_ID);
 
-        //Todo use Firebase method to get all artworks
+        //use Firebase method to get all artworks
         ArrayList<Artwork> artworks = FireBase.getUserArtwork(userID);
 
         dataAdapter = new ArtAdapter(this, R.layout.tour_item, artworks);
@@ -62,6 +62,8 @@ public class AddToTourActivity extends AppCompatActivity {
                     setResult(RESULT_OK, data);
                     finish();
                 } catch (Exception e) {
+                    setResult(RESULT_CANCELED);
+                    finish();
                 }
 
             }

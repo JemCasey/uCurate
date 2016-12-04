@@ -26,11 +26,11 @@ public class NewTourActivity extends Activity {
                 EditText tourName = (EditText) findViewById(R.id.new_tour_name);
                 EditText tourDescription = (EditText) findViewById(R.id.new_tour_description);
                 Tour newTour = new Tour(tourName.getText().toString(), tourDescription.getText().toString(), userID);
-                FireBase.addTour("1", newTour);
-                Intent intent = new Intent(NewTourActivity.this, AddToTourActivity.class);
+                FireBase.addTour(userID, newTour);
+                Intent intent = new Intent(NewTourActivity.this, EditTourActivity.class);
                 intent.putExtra(User.USER_ID, userID);
-                intent.putExtra(Tour.TOUR_NAME, tourName.getText());
-                intent.putExtra(Tour.TOUR_DESCRIPTION, tourDescription.getText());
+                intent.putExtra(Tour.TOUR_NAME, tourName.getText().toString());
+                intent.putExtra(Tour.TOUR_DESCRIPTION, tourDescription.getText().toString());
                 startActivity(intent);
             }
         });
