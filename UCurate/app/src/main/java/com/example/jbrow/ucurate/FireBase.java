@@ -129,11 +129,11 @@ public final class FireBase {
 
 
     //adds an artwork to the database
-    public static boolean addArtwork(String userid, Artwork art) {
+    public static String addArtwork(String userid, Artwork art) {
         Log.d(TAG, "entered addArtwork");
         Artwork newArt = new Artwork(art);
         if (userid == null || userid.equals("")) {
-            return false;
+            return null;
         }
         if (newArt.location == null) {
             //TODO uncomment once we're storing actual artworks
@@ -148,7 +148,7 @@ public final class FireBase {
         artsRef.child(userid).child(artworkID).setValue(newArt);
 
 
-        return true;
+        return artworkID;
     }
 
 
