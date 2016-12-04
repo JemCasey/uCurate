@@ -85,7 +85,7 @@ public class EditArtActivity extends AppCompatActivity {
                 LatLng location = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
 
                 // add data to database
-                Artwork art = new Artwork(artTitle, artDescription, location);
+                //Artwork art = new Artwork(artTitle, artDescription, location);
                 // TODO: needs to take associated tour
                 // TODO: how do I get the user
                 //FireBase.addArtwork(userId, art);

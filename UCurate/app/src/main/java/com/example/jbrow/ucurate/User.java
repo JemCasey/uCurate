@@ -17,6 +17,8 @@ public class User implements Parcelable {
     ArrayList<Artwork> artworkList = new ArrayList<Artwork>();
     ArrayList<Tour> tourList = new ArrayList<Tour>();
 
+    public User() {}
+
     public User(String name, String biography) {
         this.name = name;
         this.biography = biography;

@@ -1,11 +1,23 @@
 package com.example.jbrow.ucurate;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 import java.util.Date;
 
@@ -13,7 +25,7 @@ import java.util.Date;
  * Created by jbrow on 11/15/2016.
  */
 
-public class Artwork implements Parcelable {
+public class Artwork implements Parcelable{
 
     public static final String ARTWORK_NAME = "artwork_name";
     public static final String ARTWORK_DESCRIPTION = "artwork_description";
@@ -25,8 +37,15 @@ public class Artwork implements Parcelable {
     String description;
     LatLng location;
     String userID;
+    String path;
     String id;
     Date timeCreated;
+
+    private StorageReference mStorageRef;
+    private StorageReference mChildStorageRef;
+
+
+    public Artwork() {}
 
     public Artwork(String title, String description, LatLng location, String userID) {
         this.title = title;
@@ -125,6 +144,77 @@ public class Artwork implements Parcelable {
     public String getId() {
         return id;
     }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void downloadArtwork() {
+        StorageReference mSpecificStorageRef;
+        mSpecificStorageRef = mStorageRef.child(path);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        mSpecificStorageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap result = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                setImage(result);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+    }
+
+    public void uploadArtwork(Uri uri) {
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mChildStorageRef = mStorageRef.child("Photos");
+
+        UploadTask uploadTask = mChildStorageRef.putFile(uri);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                setPath(taskSnapshot.getMetadata().getPath());
+            }
+        });
+    }
+
+    public void uploadArtwork() {
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mChildStorageRef = mStorageRef.child("Photos");
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = mChildStorageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                setPath(taskSnapshot.getMetadata().getPath());
+
+            }
+        });
+    }
+
+
 
     public void setId(String id) {
         this.id = id;

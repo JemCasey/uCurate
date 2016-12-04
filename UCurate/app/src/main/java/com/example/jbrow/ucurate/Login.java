@@ -121,7 +121,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
+        
         final String acctID = acct.getId();
         final AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
