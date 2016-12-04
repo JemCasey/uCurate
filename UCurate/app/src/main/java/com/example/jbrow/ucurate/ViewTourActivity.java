@@ -74,12 +74,11 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
         setContentView(R.layout.activity_view_tour);
         artworks = new ArrayList<>();
         Intent intent = getIntent();
-        String userID = intent.getStringExtra("userID");
-        String tourID = intent.getStringExtra("tour_id");
+        String userID = intent.getStringExtra(User.USER_ID);
+        String tourID = intent.getStringExtra(Tour.TOUR_ID);
 
-        //ToDo: get artworks from tour of tour_id
-        ArrayList<Artwork> artworks = new ArrayList();
-
+        Tour tour = FireBase.getTour(userID, tourID);
+        ArrayList<Artwork> artworks = tour.getArtworkList();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

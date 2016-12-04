@@ -26,6 +26,7 @@ public class EditTourActivity extends Activity {
     ArrayList<Artwork> mItemArray;
     TourItemAdapter listAdapter;
     boolean saved = false;
+    String userID;
     Tour tour;
 
     @Override
@@ -33,20 +34,28 @@ public class EditTourActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_tour);
         Intent intent = getIntent();
-        String userID = intent.getStringExtra("userID");
-        String tourName = intent.getStringExtra("tour_name");
-        String tourDescription = intent.getStringExtra("tour_description");
+        userID = intent.getStringExtra(User.USER_ID);
+        String tourName = intent.getStringExtra(Tour.TOUR_NAME);
+        String tourDescription = intent.getStringExtra(Tour.TOUR_DESCRIPTION);
         tour = null;
+        TextView titleText = (TextView) findViewById(R.id.edit_tour_name);
+        TextView descriptionText = (TextView) findViewById(R.id.edit_tour_description);
+
         if (tourName == null) {
             saved = true;
             String tourID = intent.getStringExtra("tour_id");
-            //Todo: use FireBase method to get tour from tour_id
+            Tour tour = FireBase.getTour(userID, tourID);
+            titleText.setText(tour.getTitle());
+            descriptionText.setText(tour.getDescription());
+        } else {
+            titleText.setText(tourName);
+            descriptionText.setText(tourDescription);
         }
+
         mDragListView = (DragListView) findViewById(R.id.drag_list_view);
         mDragListView.setDragListListener(new DragListView.DragListListener() {
             @Override
             public void onItemDragStarted(int position) {
-                Toast.makeText(getApplicationContext(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -56,9 +65,8 @@ public class EditTourActivity extends Activity {
 
             @Override
             public void onItemDragEnded(int fromPosition, int toPosition) {
-                if (fromPosition != toPosition) {
-                    Toast.makeText(getApplicationContext(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
-                }
+                tour.setArtworkList(new ArrayList(listAdapter.getItemList()));
+
             }
         });
         if (tour != null) {
@@ -97,7 +105,7 @@ public class EditTourActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     saved = true;
-                    //Todo FireBase.editTour()
+                    //FireBase.changeUserTour(userID, tour.getId(), tour.getArtworkList());
                 }
             });
         }
@@ -106,9 +114,15 @@ public class EditTourActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EditTourActivity.this, ViewTourActivity.class);
-                intent.putExtra("tour_id", tour.getId());
-                startActivity(intent);
+                if (saved == false) {
+                    Toast.makeText(getApplicationContext(), "Please save the tour before viewing on map", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(EditTourActivity.this, ViewTourActivity.class);
+                    intent.putExtra(Tour.TOUR_ID, tour.getId());
+                    intent.putExtra(User.USER_ID, userID);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -117,12 +131,13 @@ public class EditTourActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GET_ARTWORKS && resultCode == RESULT_OK) {
             //ArrayList<Artwork> artworks = new ArrayList<>();
-            ArrayList<String> parcelables = data.getStringArrayListExtra("artworks");
-            for (String curr : parcelables) {
-                //Todo get artwork from id
-                Artwork temp = null;
+            ArrayList<String> artworks = data.getStringArrayListExtra("artworks");
+            for (String curr : artworks) {
+                //get artwork from id
+                Artwork temp = FireBase.getArtWork(userID, curr);
                 listAdapter.addItem(listAdapter.getItemCount(),temp);
             }
+            tour.setArtworkList(new ArrayList(listAdapter.getItemList()));
             saved = false;
         }
     }
