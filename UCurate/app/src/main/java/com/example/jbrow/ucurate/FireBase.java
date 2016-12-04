@@ -98,12 +98,12 @@ public final class FireBase {
     }
 
     //Adds a tour to the database
-    public static boolean addTour(String userid, Tour tour) {
+    public static String addTour(String userid, Tour tour) {
         Log.d(TAG, "entered addTour");
         Tour newTour = new Tour(tour);
 
         if (userid == null || userid.equals("")){
-            return false;
+            return null;
         }
         if (newTour.start == null){
             //TODO uncomment once we're adding real tours
@@ -124,7 +124,7 @@ public final class FireBase {
         tourID = toursRef.child(userid).push().getKey();
         toursRef.child(userid).child(tourID).setValue(newTour);
 
-        return true;
+        return tourID;
     }
 
 
