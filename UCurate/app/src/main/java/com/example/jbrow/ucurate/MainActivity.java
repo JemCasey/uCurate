@@ -269,8 +269,8 @@ public class MainActivity extends AppCompatActivity
             mUsername = ANONYMOUS;
             startActivity(new Intent(this, Login.class));
         } else if (id == R.id.action_sample_share) {
-            Intent openShare = new Intent(MainActivity.this, ShareActivity.class);
-            startActivity(openShare);
+//            Intent openShare = new Intent(MainActivity.this, ShareActivity.class);
+//            startActivity(openShare);
         }
 
         return super.onOptionsItemSelected(item);
@@ -300,13 +300,23 @@ public class MainActivity extends AppCompatActivity
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 //            return PlaceholderFragment.newInstance(position + 1);
+
+            Bundle data = new Bundle();
+            data.putString(User.USER_ID, mUsername);
+
             switch (position) {
                 case 0:
-                    return new FeedFragment();
+                    FeedFragment feedFragment = new FeedFragment();
+                    feedFragment.setArguments(data);
+                    return feedFragment;
                 case 1:
-                    return new ExploreFragment();
+                    ExploreFragment exploreFragment = new ExploreFragment();
+                    exploreFragment.setArguments(data);
+                    return exploreFragment;
                 case 2:
-                    return new AccountFragment();
+                    AccountFragment accountFragment = new AccountFragment();
+                    accountFragment.setArguments(data);
+                    return accountFragment;
                 default:
                     return null;
             }
