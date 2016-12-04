@@ -23,7 +23,7 @@ public class Tour implements Parcelable {
     LatLng location;
     String userID;
     Artwork start;
-    int id;
+    String id;
 
     public Tour(ArrayList<Artwork> artworkList, String title, String userID, String description) {
         this.artworkList.addAll(artworkList);
@@ -146,7 +146,7 @@ public class Tour implements Parcelable {
         start = artworkList.get(0);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 }
