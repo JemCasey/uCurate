@@ -25,6 +25,8 @@ public class Tour implements Parcelable {
     Artwork start;
     int id;
 
+    public Tour() {}
+
     public Tour(ArrayList<Artwork> artworkList, String title, String userID, String description) {
         this.artworkList.addAll(artworkList);
         this.title = title;
