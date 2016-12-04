@@ -119,11 +119,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Intent startEditArtActivity = new Intent(MainActivity.this,EditArtActivity.class);
-            Bundle extras = data.getExtras();
-            Uri uri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
-
-            startEditArtActivity.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+            Intent startEditArtActivity = new Intent(MainActivity.this,Login.class);
+//            Bundle extras = data.getExtras();
+//            Uri uri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
+//
+//            startEditArtActivity.putExtra(MediaStore.EXTRA_OUTPUT,uri);
             startActivity(startEditArtActivity);
         }
     }
