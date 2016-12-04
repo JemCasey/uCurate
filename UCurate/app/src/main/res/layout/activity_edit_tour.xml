@@ -34,10 +34,10 @@
         android:padding="20dp"
         android:textSize="10dp"
         />
-<!--    <com.woxthebox.draglistview.DragListView
+    <com.woxthebox.draglistview.DragListView
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:id="@+id/drag_list_view"></com.woxthebox.draglistview.DragListView>-->
+        android:id="@+id/drag_list_view"></com.woxthebox.draglistview.DragListView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
