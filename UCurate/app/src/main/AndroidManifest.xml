@@ -97,7 +97,7 @@
         <activity android:name=".EditTourActivity" />
 
 
-        <activity android:name=".ShareActivity"></activity>
+        <activity android:name=".ViewArtActivity"></activity>
         <activity android:name=".EditArtActivity"></activity>
 
     </application>
