@@ -6,6 +6,6 @@
     android:layout_height="35dip"
     android:gravity="center_vertical"
     android:paddingLeft="5dip"
-    android:background="@color/navy">
+    android:background="@color/background">
 
 </LinearLayout>

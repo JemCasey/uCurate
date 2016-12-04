@@ -4,6 +4,7 @@ package com.example.jbrow.ucurate;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -109,21 +110,45 @@ public class MainActivity extends AppCompatActivity
 
         loadFab();
 
-        Log.d("MainActivity", "onCreate entered");
-        FireBase.addUser("userIDtest4", new User("nametest4", "biotest4"));
+//
+        Bitmap debugBitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.spiritualheroes);
+        Artwork debugArt1 = new Artwork("DubugArt_1", "This is a piece of artwork notable for its use in debugging",
+                new LatLng(123.4, 123.4), "DebugUser");
+        debugArt1.id = FireBase.addArtwork("DebugUser", debugArt1);
+        debugArt1.uploadArtwork(debugBitmap1);
+
+        Bitmap debugBitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.betty);
+        Artwork debugArt2 = new Artwork("DubugArt_2", "The second in our series of art perfect for your debugging needs",
+                new LatLng(12.34, 12.34), "DebugUser");
+        debugArt2.id = FireBase.addArtwork("DebugUser", debugArt2);
+        debugArt2.uploadArtwork(debugBitmap2);
+
+
+
+        User debugUser = new User("Debugger McBugson", "Boy I sure do love debugging");
+        ArrayList<Artwork> debugArtList = new ArrayList<Artwork>();
+        debugUser.addArtwork(debugArt1);
+        debugUser.addArtwork(debugArt2);
+
+//
+//        Log.d("MainActivity", "onCreate entered");
+//        FireBase.addUser("DebugUser", debugUser);
+//        User testUser = FireBase.getUser("testUserID2");
 //        FireBase.addTour("userIDtest4", new Tour("testTour3","testTourDesc3"));
-        FireBase.addArtwork("userID1", new Artwork("testArt","testArtDesc"));
+       // FireBase.addArtwork("userID1", new Artwork("testArt","testArtDesc"));
+//        testUser.setBiography("New bio");
+//        FireBase.addUser("userIDtest4_new", testUser);
 
     }
     // Handles result from a call to device's native Camera Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Intent startEditArtActivity = new Intent(MainActivity.this,EditArtActivity.class);
-            Bundle extras = data.getExtras();
-            Uri uri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
-
-            startEditArtActivity.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+            Intent startEditArtActivity = new Intent(MainActivity.this,Login.class);
+//            Bundle extras = data.getExtras();
+//            Uri uri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
+//
+//            startEditArtActivity.putExtra(MediaStore.EXTRA_OUTPUT,uri);
             startActivity(startEditArtActivity);
         }
     }

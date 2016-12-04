@@ -35,6 +35,7 @@ public class User implements Parcelable {
         this.name = other.name;
         this.biography = other.biography;
         this.userImage = other.userImage;
+        this.setArtworkList(other.getArtworkList());
     }
 
     protected User(Parcel in) {

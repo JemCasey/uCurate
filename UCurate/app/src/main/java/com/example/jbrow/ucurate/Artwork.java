@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -190,9 +191,34 @@ public class Artwork implements Parcelable{
         });
     }
 
+    public void uploadArtwork(Bitmap inputBitmap) {
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        Log.d("Artwork", "uploadArtwork: id=" + id);
+        mChildStorageRef = mStorageRef.child(id);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        inputBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = mChildStorageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                setPath(taskSnapshot.getMetadata().getPath());
+
+            }
+        });
+    }
+
     public void uploadArtwork() {
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        mChildStorageRef = mStorageRef.child("Photos");
+        mChildStorageRef = mStorageRef.child(id);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);

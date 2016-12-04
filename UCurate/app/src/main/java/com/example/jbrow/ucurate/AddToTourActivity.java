@@ -29,16 +29,14 @@ public class AddToTourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_tour);
         Intent intent = getIntent();
-        String userID = intent.getStringExtra("userID");
+        String userID = intent.getStringExtra(User.USER_ID);
 
-        //Todo use Firebase method to get all artworks
-        ArrayList<Artwork> artworks = new ArrayList();
-
-        //    artworks.add(new Artwork("Betty", "this is by Gerhard Richter", new LatLng(38.984929, -76.947760)/*,BitmapFactory.decodeResource(getResources(),R.drawable.betty)*/));
-        //    artworks.add(new Artwork("Higher Beings Commanded: Paint the Upper-Right Corner Black!", "this is by Sigmar Polke", new LatLng(38.99, -76.947760)/*,BitmapFactory.decodeResource(getResources(),R.drawable.betty)*/));
+        //use Firebase method to get all artworks
+        ArrayList<Artwork> artworks = FireBase.getUserArtwork(userID);
 
         dataAdapter = new ArtAdapter(this, R.layout.tour_item, artworks);
         ListView listView = (ListView) findViewById(R.id.listView1);
+
         // Assign adapter to ListView
         listView.setAdapter(dataAdapter);
 
@@ -64,6 +62,8 @@ public class AddToTourActivity extends AppCompatActivity {
                     setResult(RESULT_OK, data);
                     finish();
                 } catch (Exception e) {
+                    setResult(RESULT_CANCELED);
+                    finish();
                 }
 
             }

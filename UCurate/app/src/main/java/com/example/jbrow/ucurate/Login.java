@@ -2,12 +2,14 @@ package com.example.jbrow.ucurate;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -25,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.io.File;
+
 /**
  * Created by randyflores on 12/1/16.
  */
@@ -37,6 +41,11 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    //Testing Image File Transfer Functionality
+    private Uri uri;
+    private File imgFile;
+    private ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +88,9 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 // ...
             }
         };
+
+        //Test Image Transfer
+        logo = (ImageView) findViewById(R.id.logo);
     }
 
     @Override
