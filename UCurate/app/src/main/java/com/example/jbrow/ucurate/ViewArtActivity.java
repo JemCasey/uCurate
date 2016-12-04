@@ -26,7 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.Arrays;
 import java.util.List;
 
-public class ShareActivity extends AppCompatActivity {
+public class ViewArtActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginManager loginManager;
     private Artwork shareArt;
@@ -38,7 +38,7 @@ public class ShareActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share);
+        setContentView(R.layout.activity_view_art);
         shareArt = new Artwork("Betty", "this is by Gerhard Richter", new LatLng(38.99, -76.947760), "blah", BitmapFactory.decodeResource(getResources(),R.drawable.betty));
 
         ImageView image = (ImageView) findViewById(R.id.share_image);
@@ -66,7 +66,7 @@ public class ShareActivity extends AppCompatActivity {
                 //this loginManager helps you eliminate adding a LoginButton to your UI
                 loginManager = LoginManager.getInstance();
 
-                loginManager.logInWithPublishPermissions(ShareActivity.this, permissionNeeds);
+                loginManager.logInWithPublishPermissions(ViewArtActivity.this, permissionNeeds);
 
                 loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>()
                 {
