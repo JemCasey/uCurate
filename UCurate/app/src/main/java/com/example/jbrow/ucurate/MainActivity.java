@@ -116,20 +116,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    // Handles result from a call to device's native Camera Activity
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            Uri uri = (Uri) extras.get("uri");
 
-
-
-            //TODO: send imageBitmap to EditArtActivity
-
-        }
-    }
+    
 
     public void loadFab() {
         Log.d("MainActivity", "loadFab entered");
@@ -162,28 +150,7 @@ public class MainActivity extends AppCompatActivity
         addArtFab.setOnClickListener(new View.OnClickListener() {
             // start activity to add an image
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                // Ensure that there's a camera activity to handle the intent
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    // Create the File where the photo should go
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                    } catch (IOException ex) {
-                        // Error occurred while creating the File
-                        Toast.makeText(MainActivity.this, "Error occurred while creating file",
-                                Toast.LENGTH_LONG).show();
 
-                    }
-                    // Continue only if the File was successfully created
-                    if (photoFile != null) {
-//                        Uri photoURI = FileProvider.getUriForFile(MainActivity.this,
-//                                "com.example.jbrow.ucurate.fileprovider",
-//                                photoFile);
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                    }
-                }
 
             }
         });
@@ -197,17 +164,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        //File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName,".jpg");
 
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 
     public void animateFab() {
         if(isFabOpen) {
