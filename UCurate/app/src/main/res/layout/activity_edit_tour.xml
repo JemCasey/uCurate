@@ -10,6 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:gravity="center"
+    android:textColor="@color/text"
+    android:background="@color/background"
     tools:context="com.example.jbrow.ucurate.EditTourActivity">
     <TextView
         android:id="@+id/edit_tour_name"
@@ -28,6 +30,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/text"
         android:text="Click and drag artworks to reorder them"
         android:id="@+id/drag_instructions"
         android:ellipsize="end"
@@ -43,20 +46,26 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            android:textColor="@color/text"
+            android:background="@drawable/custom_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Add Art to Tour"
             android:id="@+id/add_art_to_tour"
             />
         <Button
+            android:textColor="@color/text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/custom_button"
             android:text="Save Tour"
             android:id="@+id/save_tour"
             />
         <Button
+
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/custom_button"
             android:text="View Tour on Map"
             android:id="@+id/view_tour"
             />
