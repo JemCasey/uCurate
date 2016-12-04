@@ -61,7 +61,7 @@ public class TourItemAdapter extends DragItemAdapter<Artwork, TourItemAdapter.Vi
 
     @Override
     public long getItemId(int position) {
-        return ((Artwork) mItemList.get(position)).getId();
+        return position;
     }
 
 
