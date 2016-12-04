@@ -8,7 +8,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <uses-feature android:name="android.hardware.camera2" />
+
+   <!-- for camera use -->
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -66,6 +71,17 @@
             android:exported="true">
         </provider>
 
+        <!-- contentprovider for files -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.jbrow.ucurate.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -82,9 +98,12 @@
         <activity android:name=".NewTourActivity" />
         <activity android:name=".AddToTourActivity" />
         <activity android:name=".EditTourActivity" />
+
+
         <activity android:name=".ShareActivity"></activity>
         <activity android:name=".ViewArtActivity" />
         <activity android:name=".EditArtActivity"></activity>
+
     </application>
 
 </manifest>
