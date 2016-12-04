@@ -7,6 +7,8 @@ import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Date;
+
 /**
  * Created by jbrow on 11/15/2016.
  */
@@ -24,18 +26,19 @@ public class Artwork implements Parcelable {
     LatLng location;
     String userID;
     String id;
+    Date creationDate;
 
-    public Artwork(String title, String description, LatLng location, String userID) {
+    public Artwork(String title, String description, LatLng location, String userID, Date date) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.userID = userID;
+        this.creationDate = date;
     }
 
-    public Artwork(String title, String description, LatLng location, String userID, Bitmap image) {
-        this(title, description, location, userID);
+    public Artwork(String title, String description, LatLng location, String userID, Bitmap image, Date date) {
+        this(title, description, location, userID, date);
         this.image = image;
-        this.userID = userID;
     }
 
     //copy constructor
