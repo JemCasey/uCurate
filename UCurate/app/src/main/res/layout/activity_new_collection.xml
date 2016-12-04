@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/collectioname"
+                    android:id="@+id/new_tour_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Collection Name" />
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/collectiondescription"
+                    android:id="@+id/new_tour_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Collection Description"
@@ -49,7 +49,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/newcollection"
+                android:id="@+id/add_new_tour"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

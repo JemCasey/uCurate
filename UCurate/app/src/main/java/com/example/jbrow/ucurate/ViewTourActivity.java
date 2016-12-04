@@ -75,11 +75,10 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
         artworks = new ArrayList<>();
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
-        ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra("artworks");
-        for (Parcelable curr : parcelables) {
-            Artwork temp = (Artwork) curr;
-            artworks.add(temp);
-        }
+        String tourID = intent.getStringExtra("tour_id");
+
+        //ToDo: get artworks from tour of tour_id
+        ArrayList<Artwork> artworks = new ArrayList();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
