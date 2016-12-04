@@ -21,12 +21,15 @@ public class Tour implements Parcelable {
     String title;
     String description;
     LatLng location;
+    String userID;
     Artwork start;
+    int id;
 
-    public Tour(ArrayList<Artwork> artworkList, String title, String description) {
+    public Tour(ArrayList<Artwork> artworkList, String title, String userID, String description) {
         this.artworkList.addAll(artworkList);
         this.title = title;
         this.description = description;
+        this.userID = userID;
         this.location = artworkList.get(0).location;
         this.start = artworkList.get(0);
     }
@@ -40,6 +43,7 @@ public class Tour implements Parcelable {
         }
         this.title = other.title;
         this.description = other.description;
+        this.userID = other.userID;
         this.location = other.location;
         this.start = other.start;
     }
@@ -48,7 +52,7 @@ public class Tour implements Parcelable {
     //feel free to change this, it's just for testing in a world
     //were lists of artwork are hard to come by.
     // -Matt
-    public Tour(String title, String description) {
+    public Tour(String title, String description, String UserId) {
         this.title = title;
         this.description = description;
     }
@@ -75,6 +79,8 @@ public class Tour implements Parcelable {
     public void setArtworkList(ArrayList<Artwork> artworkList) {
         this.artworkList = artworkList;
     }
+
+    public String getUserID() { return userID; }
 
     public String getTitle() {
         return title;
@@ -138,5 +144,9 @@ public class Tour implements Parcelable {
         // TODO Account for a user rearranging the order of a tour
         artworkList.addAll(newStops);
         start = artworkList.get(0);
+    }
+
+    public int getId() {
+        return id;
     }
 }
