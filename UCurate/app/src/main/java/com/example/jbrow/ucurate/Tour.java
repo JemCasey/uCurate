@@ -6,6 +6,8 @@ import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Created by randyflores on 11/30/16.
  */
@@ -24,6 +26,7 @@ public class Tour implements Parcelable {
     String userID;
     Artwork start;
     String id;
+    Date timeCreated;
 
     public Tour(ArrayList<Artwork> artworkList, String title, String userID, String description) {
         this.artworkList.addAll(artworkList);
@@ -149,4 +152,7 @@ public class Tour implements Parcelable {
     public String getId() {
         return id;
     }
+    
+    public void setId(String id) { this.id = id; }
+    public void setDate(Date date) { this.timeCreated = date; }
 }
