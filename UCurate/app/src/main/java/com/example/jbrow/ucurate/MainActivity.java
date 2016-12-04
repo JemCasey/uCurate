@@ -111,9 +111,24 @@ public class MainActivity extends AppCompatActivity
 
         Log.d("MainActivity", "onCreate entered");
         FireBase.addUser("userIDtest4", new User("nametest4", "biotest4"));
-        FireBase.addTour("userIDtest4", new Tour("testTour3","testTourDesc3"));
+//        FireBase.addTour("userIDtest4", new Tour("testTour3","testTourDesc3"));
         FireBase.addArtwork("userID1", new Artwork("testArt","testArtDesc"));
 
+    }
+    // Handles result from a call to device's native Camera Activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Uri uri = (Uri) extras.get("uri");
+
+
+
+
+            //TODO: send imageBitmap to EditArtActivity
+
+        }
     }
 
 
@@ -150,6 +165,22 @@ public class MainActivity extends AppCompatActivity
         addArtFab.setOnClickListener(new View.OnClickListener() {
             // start activity to add an image
             public void onClick(View view) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                // Ensure that there's a camera activity to handle the intent
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    }
+                }
 
 
             }
@@ -163,6 +194,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        //File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName,".jpg");
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
 
@@ -214,9 +257,9 @@ public class MainActivity extends AppCompatActivity
             LatLng loctwo = new LatLng(38.984929, -76.947760);
 
             ArrayList<Artwork> artworks = new ArrayList<>();
-            artworks.add(new Artwork("Rhein II", "This is by Andreas Gursky. It became the most expensive photograph ever sold when a print was auctioned for $4.3 million in 2011.", locone));
-            artworks.add(new Artwork("Betty", "this is by Gerhard Richter", loctwo));
-            artworks.add(new Artwork("Germany's Spiritual Heroes", "this is by Anselm Kiefer", new LatLng(38.992884, -76.948417)));
+//            artworks.add(new Artwork("Rhein II", "This is by Andreas Gursky. It became the most expensive photograph ever sold when a print was auctioned for $4.3 million in 2011.", locone));
+//            artworks.add(new Artwork("Betty", "this is by Gerhard Richter", loctwo));
+//            artworks.add(new Artwork("Germany's Spiritual Heroes", "this is by Anselm Kiefer", new LatLng(38.992884, -76.948417)));
             Intent openTour = new Intent(MainActivity.this,ViewTourActivity.class);
             openTour.putParcelableArrayListExtra("artworks", artworks);
             startActivity(openTour);
