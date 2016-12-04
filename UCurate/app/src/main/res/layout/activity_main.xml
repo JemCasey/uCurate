@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_apps_black_24dp"
-            android:id="@+id/add_gallery_fab"
+            android:id="@+id/add_tour_fab"
             android:layout_above="@+id/add_art_fab"
             app:useCompatPadding="false"
             android:layout_centerHorizontal="true"

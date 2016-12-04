@@ -48,14 +48,18 @@ public class EditTourActivity extends Activity {
                 }
             }
         });
-        mItemArray = new ArrayList();
-        mItemArray.add(new Artwork("Rhein II", "This is by Andreas Gursky.",new LatLng(38.990633, -76.949384), BitmapFactory.decodeResource(getResources(),R.drawable.rheinii)));
-        mItemArray.add(new Artwork("Germany's Spiritual Heroes", "this is by Anselm Kiefer", new LatLng(38.992884, -76.948417),BitmapFactory.decodeResource(getResources(),R.drawable.spiritualheroes)));
+        //Todo: get tour from FireBase
+        Tour tour = new Tour("blah", "blah2", "foo");
+        mItemArray = tour.getArtworkList();
+        //mItemArray.add(new Artwork("Rhein II", "This is by Andreas Gursky.",new LatLng(38.990633, -76.949384), BitmapFactory.decodeResource(getResources(),R.drawable.rheinii)));
+        //mItemArray.add(new Artwork("Germany's Spiritual Heroes", "this is by Anselm Kiefer", new LatLng(38.992884, -76.948417),BitmapFactory.decodeResource(getResources(),R.drawable.spiritualheroes)));
         mDragListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         listAdapter = new TourItemAdapter(mItemArray, R.layout.tour_item, R.id.artwork_image, false);
         mDragListView.setAdapter(listAdapter, true);
         mDragListView.setCanDragHorizontally(false);
-
+        if (tour.getUserID() != "foo") {
+            mDragListView.setDragEnabled(false);
+        }
         Button addArt = (Button) findViewById(R.id.add_art_to_tour);
         addArt.setOnClickListener(new View.OnClickListener() {
             @Override

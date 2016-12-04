@@ -47,13 +47,13 @@ public class AccountFragment extends ListFragment {
 
 
         // drop down for artwork vs tours
-        Spinner type_spinner = (Spinner) view.findViewById(R.id.item_type);
-        ArrayAdapter<CharSequence> type_adapter =
+        Spinner typeSpinner = (Spinner) view.findViewById(R.id.item_type);
+        ArrayAdapter<CharSequence> typeAdapter =
                 ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
                 R.array.item_types, android.R.layout.simple_spinner_item);
-        type_spinner.setAdapter(type_adapter);
+        typeSpinner.setAdapter(typeAdapter);
 
-        type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -72,13 +72,13 @@ public class AccountFragment extends ListFragment {
         });
 
         // drop down for sort by options
-        Spinner sort_spinner = (Spinner) view.findViewById(R.id.sort_by);
-        ArrayAdapter<CharSequence> sort_adapter =
+        Spinner sortSpinner = (Spinner) view.findViewById(R.id.sort_by);
+        ArrayAdapter<CharSequence> sortAdapter =
                 ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
                 R.array.sort_by_values, android.R.layout.simple_spinner_item);
-        sort_spinner.setAdapter(sort_adapter);
+        sortSpinner.setAdapter(sortAdapter);
 
-        sort_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {

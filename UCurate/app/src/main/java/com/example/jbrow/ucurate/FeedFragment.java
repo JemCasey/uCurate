@@ -2,16 +2,20 @@ package com.example.jbrow.ucurate;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.List;
 
 
 public class FeedFragment extends ListFragment {
 
     FeedItemAdapter mFeedItemAdapter;
+    private SwipeRefreshLayout swipeDownContainer;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -34,8 +38,27 @@ public class FeedFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
         setListAdapter(mFeedItemAdapter);
 
+        swipeDownContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeDownContainer);
+        swipeDownContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // get data again
+                // do stuff and then return
+                mFeedItemAdapter.clear();
+
+                // get new data
+                List<FeedItem> newData = null; // get data
+                mFeedItemAdapter.addAll(newData);
+                swipeDownContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeDownContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
         return view;
     }
-
-
 }

@@ -12,21 +12,30 @@ import com.google.android.gms.maps.model.LatLng;
  */
 
 public class Artwork implements Parcelable {
+
+    public static final String ARTWORK_NAME = "artwork_name";
+    public static final String ARTWORK_DESCRIPTION = "artwork_description";
+    public static final String ARTWORK_IMAGE = "artwork_image";
+    public static final String ARTWORK_ID = "artwork_id";
+
     Bitmap image;
     String title;
     String description;
     LatLng location;
-    int id;
+    String userID;
+    String id;
 
-    public Artwork(String title, String description, LatLng location) {
+    public Artwork(String title, String description, LatLng location, String userID) {
         this.title = title;
         this.description = description;
         this.location = location;
+        this.userID = userID;
     }
 
-    public Artwork(String title, String description, LatLng location, Bitmap image) {
-        this(title, description, location);
+    public Artwork(String title, String description, LatLng location, String userID, Bitmap image) {
+        this(title, description, location, userID);
         this.image = image;
+        this.userID = userID;
     }
 
     //copy constructor
@@ -97,6 +106,8 @@ public class Artwork implements Parcelable {
         return image;
     }
 
+    public String getUserID() { return userID; }
+
     public String getTitle() {
         return title;
     }
@@ -109,7 +120,7 @@ public class Artwork implements Parcelable {
         return location;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 }

@@ -66,6 +66,18 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1975496892677309"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true">
+        </provider>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name">
+        </activity>
+
         <activity
             android:name=".ViewTourActivity"
             android:label="@string/title_activity_view_tour" />
@@ -75,6 +87,11 @@
         <activity android:name=".NewTourActivity" />
         <activity android:name=".AddToTourActivity" />
         <activity android:name=".EditTourActivity" />
+
+
+        <activity android:name=".ShareActivity"></activity>
+        <activity android:name=".ViewArtActivity" />
+        <activity android:name=".EditArtActivity"></activity>
 
     </application>
 
