@@ -111,25 +111,25 @@ public class MainActivity extends AppCompatActivity
         loadFab();
 
 //
-//        Bitmap debugBitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.spiritualheroes);
-//        Artwork debugArt1 = new Artwork("DubugArt_1", "This is a piece of artwork notable for its use in debugging",
-//                new LatLng(123.4, 123.4), "DebugUser");
-//        debugArt1.id = FireBase.addArtwork("DebugUser", debugArt1);
-//        debugArt1.uploadArtwork(debugBitmap1);
-//
-//        Bitmap debugBitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.betty);
-//        Artwork debugArt2 = new Artwork("DubugArt_2", "The second in our series of art perfect for your debugging needs",
-//                new LatLng(12.34, 12.34), "DebugUser");
-//        debugArt2.id = FireBase.addArtwork("DebugUser", debugArt2);
-//        debugArt2.uploadArtwork(debugBitmap2);
-//
-//
-//
-//        User debugUser = new User("Debugger McBugson", "Boy I sure do love debugging");
-//        ArrayList<Artwork> debugArtList = new ArrayList<Artwork>();
-//        debugUser.addArtwork(debugArt1);
-//        debugUser.addArtwork(debugArt2);
-//
+        Bitmap debugBitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.spiritualheroes);
+        Artwork debugArt1 = new Artwork("DubugArt_1", "This is a piece of artwork notable for its use in debugging",
+                new LatLng(123.4, 123.4), "DebugUser");
+        debugArt1.id = FireBase.addArtwork("DebugUser", debugArt1);
+        debugArt1.uploadArtwork(debugBitmap1);
+
+        Bitmap debugBitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.betty);
+        Artwork debugArt2 = new Artwork("DubugArt_2", "The second in our series of art perfect for your debugging needs",
+                new LatLng(12.34, 12.34), "DebugUser");
+        debugArt2.id = FireBase.addArtwork("DebugUser", debugArt2);
+        debugArt2.uploadArtwork(debugBitmap2);
+
+
+
+        User debugUser = new User("Debugger McBugson", "Boy I sure do love debugging");
+        ArrayList<Artwork> debugArtList = new ArrayList<Artwork>();
+        debugUser.addArtwork(debugArt1);
+        debugUser.addArtwork(debugArt2);
+
 //
 //        Log.d("MainActivity", "onCreate entered");
 //        FireBase.addUser("DebugUser", debugUser);
