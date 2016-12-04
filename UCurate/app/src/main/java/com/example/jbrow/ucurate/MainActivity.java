@@ -119,11 +119,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Intent startEditArtActivity = new Intent(MainActivity.this,Login.class);
-//            Bundle extras = data.getExtras();
-//            Uri uri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
-//
-//            startEditArtActivity.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+            Intent startEditArtActivity = new Intent(MainActivity.this,EditArtActivity.class);
+            Bundle extras = data.getExtras();
+            Uri uri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
+
+            startEditArtActivity.putExtra(User.USER_ID,mUsername);
+            startEditArtActivity.putExtra("IMAGE_URI",mCurrentPhotoPath);
             startActivity(startEditArtActivity);
         }
     }
@@ -170,11 +171,15 @@ public class MainActivity extends AppCompatActivity
                     try {
                         photoFile = createImageFile();
                     } catch (IOException ex) {
-
+                        Toast.makeText(getApplicationContext(), "error in making image file", Toast.LENGTH_LONG).show();
                     }
                     // Continue only if the File was successfully created
                     if (photoFile != null) {
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                FileProvider.getUriForFile(MainActivity.this,
+                                "com.example.jbrow.ucurate.fileprovider",
+                                photoFile));
+
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                     }
                 }
@@ -197,8 +202,8 @@ public class MainActivity extends AppCompatActivity
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        //File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName,".jpg");
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName,".jpg",storageDir);
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
