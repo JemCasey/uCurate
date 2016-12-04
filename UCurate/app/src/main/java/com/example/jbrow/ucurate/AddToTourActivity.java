@@ -28,9 +28,17 @@ public class AddToTourActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_tour);
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userID");
+
+        //Todo use Firebase method to get all artworks
         ArrayList<Artwork> artworks = new ArrayList();
+
         artworks.add(new Artwork("Betty", "this is by Gerhard Richter", new LatLng(38.984929, -76.947760)/*,BitmapFactory.decodeResource(getResources(),R.drawable.betty)*/));
         artworks.add(new Artwork("Higher Beings Commanded: Paint the Upper-Right Corner Black!", "this is by Sigmar Polke", new LatLng(38.99, -76.947760)/*,BitmapFactory.decodeResource(getResources(),R.drawable.betty)*/));
+        artworks.add(new Artwork("Betty", "this is by Gerhard Richter", new LatLng(38.984929, -76.947760)/*,BitmapFactory.decodeResource(getResources(),R.drawable.betty)*/));
+        artworks.add(new Artwork("Higher Beings Commanded: Paint the Upper-Right Corner Black!", "this is by Sigmar Polke", new LatLng(38.99, -76.947760)/*,BitmapFactory.decodeResource(getResources(),R.drawable.betty)*/));
+
 
         dataAdapter = new ArtAdapter(this, R.layout.tour_item, artworks);
         ListView listView = (ListView) findViewById(R.id.listView1);
@@ -44,17 +52,17 @@ public class AddToTourActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 ArrayList<Artwork> artList = dataAdapter.artList;
-                ArrayList<Artwork> selectedArt = new ArrayList();
+                ArrayList<String> selectedArt = new ArrayList();
                 for(int i=0;i < artList.size();i++){
                     Artwork artwork = artList.get(i);
                     Boolean isSelected = dataAdapter.isSelected.get(artwork.getTitle());
                     if(isSelected != null && isSelected.booleanValue() == true){
-                        selectedArt.add(artwork);
+                        selectedArt.add(artwork.getId());
                     }
                 }
 
                 Intent data = new Intent();
-                data.putParcelableArrayListExtra("artworks", selectedArt);
+                data.putStringArrayListExtra("artworks", selectedArt);
                 try {
                     setResult(RESULT_OK, data);
                     finish();
@@ -106,12 +114,11 @@ public class AddToTourActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         CheckBox cb = (CheckBox) v ;
                         Artwork artwork = (Artwork) cb.getTag();
-                        Toast.makeText(getApplicationContext(),
+                        /*Toast.makeText(getApplicationContext(),
                                 "Clicked on Checkbox: " + cb.getText() +
                                         " is " + cb.isChecked(),
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_LONG).show();*/
                         isSelected.put(artwork.getTitle(),cb.isChecked());
-                        Log.i("yo", "yo");
                     }
                 });
             }

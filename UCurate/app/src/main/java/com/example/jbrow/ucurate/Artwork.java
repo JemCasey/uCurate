@@ -19,11 +19,13 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.Date;
+
 /**
  * Created by jbrow on 11/15/2016.
  */
 
-public class Artwork implements Parcelable, Comparable{
+public class Artwork implements Parcelable{
 
     public static final String ARTWORK_NAME = "artwork_name";
     public static final String ARTWORK_DESCRIPTION = "artwork_description";
@@ -35,8 +37,9 @@ public class Artwork implements Parcelable, Comparable{
     String description;
     LatLng location;
     String userID;
-    int id;
     String path;
+    String id;
+    Date timeCreated;
 
     private StorageReference mStorageRef;
     private StorageReference mChildStorageRef;
@@ -54,7 +57,6 @@ public class Artwork implements Parcelable, Comparable{
     public Artwork(String title, String description, LatLng location, String userID, Bitmap image) {
         this(title, description, location, userID);
         this.image = image;
-        this.userID = userID;
     }
 
     //copy constructor
@@ -139,7 +141,7 @@ public class Artwork implements Parcelable, Comparable{
         return location;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -213,8 +215,16 @@ public class Artwork implements Parcelable, Comparable{
     }
 
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setDate(Date date) {
+        this.timeCreated = date;
+    }
+
+    public Date getDate() {
+        return timeCreated;
     }
 }
