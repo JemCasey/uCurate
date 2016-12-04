@@ -119,15 +119,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Intent startEditArtActivity = new Intent(MainActivity.this,EditArtActivity.class);
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            Uri uri = (Uri) extras.get("uri");
+            Uri uri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
 
-
-
-
-            //TODO: send imageBitmap to EditArtActivity
-
+            startEditArtActivity.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+            startActivity(startEditArtActivity);
         }
     }
 

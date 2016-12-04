@@ -23,6 +23,15 @@ public class NewTourActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+
+                EditText collectionName = (EditText) findViewById(R.id.collectioname);
+                EditText collectionDescription = (EditText) findViewById(R.id.collectiondescription);
+                Tour newTour = new Tour(collectionName.getText().toString(), collectionDescription.getText().toString());
+                FireBase.addTour("1", newTour);
+                Intent intent = new Intent(NewTourActivity.this, AddToTourActivity.class);
+                intent.putExtra("name", collectionName.getText());
+                startActivity(intent);
+
                 EditText tourName = (EditText) findViewById(R.id.new_tour_name);
                 EditText tourDescription = (EditText) findViewById(R.id.new_tour_description);
                 Tour newTour = new Tour(tourName.getText().toString(), tourDescription.getText().toString(), userID);
@@ -32,6 +41,7 @@ public class NewTourActivity extends Activity {
                 intent.putExtra("tour_description", tourDescription.getText());
 
                 startActivity(intent);
+
             }
         });
     }
