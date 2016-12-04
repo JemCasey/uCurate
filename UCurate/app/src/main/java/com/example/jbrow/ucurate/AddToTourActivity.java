@@ -32,12 +32,7 @@ public class AddToTourActivity extends AppCompatActivity {
         String userID = intent.getStringExtra(User.USER_ID);
 
         //Todo use Firebase method to get all artworks
-
-        ArrayList<Artwork> artworks = FireBase.getUserArtwork(User.USER_ID);
-
-        //    artworks.add(new Artwork("Betty", "this is by Gerhard Richter", new LatLng(38.984929, -76.947760)/*,BitmapFactory.decodeResource(getResources(),R.drawable.betty)*/));
-        //    artworks.add(new Artwork("Higher Beings Commanded: Paint the Upper-Right Corner Black!", "this is by Sigmar Polke", new LatLng(38.99, -76.947760)/*,BitmapFactory.decodeResource(getResources(),R.drawable.betty)*/));
-
+        ArrayList<Artwork> artworks = FireBase.getUserArtwork(userID);
 
         dataAdapter = new ArtAdapter(this, R.layout.tour_item, artworks);
         ListView listView = (ListView) findViewById(R.id.listView1);

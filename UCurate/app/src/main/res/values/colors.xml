@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1b9aaa</color>
+    <color name="colorPrimary">#08415C</color>
     <color name="colorPrimaryDark">#CDD6DD</color>
-    <color name="colorAccent">#4285F4</color>
-    <color name="mapLine">#002642</color>
-    <color name="white">#FFFFFF</color>
+    <color name="colorAccent">#08415C</color>
+    <color name="mapLine">#3980ED</color>
+    <color name="text">#dee5e5</color>
+    <color name="background">#1b9aaa</color>
 </resources>
