@@ -159,4 +159,6 @@ public class Tour implements Parcelable {
     
     public void setId(String id) { this.id = id; }
     public void setDate(Date date) { this.timeCreated = date; }
+
+    public Date getDate() { return timeCreated;}
 }

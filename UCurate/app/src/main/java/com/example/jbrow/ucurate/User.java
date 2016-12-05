@@ -115,4 +115,6 @@ public class User implements Parcelable {
     public void addTour(Tour tour) {
         tourList.add(tour);
     }
+
+    //TODO add in appropriate firebase stuff
 }

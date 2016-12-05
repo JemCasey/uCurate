@@ -30,7 +30,7 @@
                     android:id="@+id/new_tour_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Collection Name" />
+                    android:hint="Tour Name" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -42,7 +42,7 @@
                     android:id="@+id/new_tour_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Collection Description"
+                    android:hint="Tour Description"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Create Collection"
+                android:text="Create Tour"
                 android:textStyle="bold" />
 
         </LinearLayout>
