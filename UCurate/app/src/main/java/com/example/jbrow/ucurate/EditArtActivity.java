@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,13 +48,14 @@ public class EditArtActivity extends AppCompatActivity {
             image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Image could not be found", Toast.LENGTH_LONG);
-            // TODO: go back to main?
             e.printStackTrace();
+            finish();
         }
         final Bitmap finalImage = image;
 
+
         ImageView editArtImage = (ImageView) findViewById(R.id.edit_art_image);
-        editArtImage.setImageBitmap(image);
+        editArtImage.setImageBitmap(finalImage);
 
         final EditText editArtTitle = (EditText) findViewById(R.id.edit_art_title);
         final EditText editArtDescription = (EditText) findViewById(R.id.edit_art_description);
@@ -95,9 +98,8 @@ public class EditArtActivity extends AppCompatActivity {
                 LatLng location = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
 
                 Artwork artwork = new Artwork(artTitle, artDescription, location, userId, finalImage);
-                artwork.uploadArtwork();
 
-                String artworkId = FireBase.addArtwork(userId, artwork);
+                String artworkId = FireBase.addArtwork(userId, artwork, finalImage);
 
                 // TODO: update feed?
 
