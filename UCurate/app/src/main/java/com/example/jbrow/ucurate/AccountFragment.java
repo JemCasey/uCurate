@@ -3,6 +3,7 @@ package com.example.jbrow.ucurate;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -30,9 +37,34 @@ public class AccountFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String userId = getArguments().getString(User.USER_ID);
+        final String userId = getArguments().getString(User.USER_ID);
         mAccountItemAdapter = new AccountItemAdapter(getActivity().getApplicationContext(), userId);
         // TODO: add when firebase functionality added
+
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("users");
+
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //mUser = dataSnapshot.getValue(User.class);
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    if (postSnapshot.getKey().equals(userId)) {
+                        Log.d("AccountFragment", "Found: " + userId);
+                        user = postSnapshot.getValue(User.class);
+                    }
+                    Log.d("onDataChange", "leaving onDataChanged");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 //      user = FireBase.getUser(userId);
     }
 
