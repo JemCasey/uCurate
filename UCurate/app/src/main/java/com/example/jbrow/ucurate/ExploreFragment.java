@@ -102,8 +102,8 @@ public class ExploreFragment extends ListFragment {
         }
         @Override
         public int compare(Tour tour1, Tour tour2) {
-            LatLng Location1 = tour1.getLocation();
-            LatLng Location2 = tour2.getLocation();
+            LatLng Location1 = new LatLng(tour1.getLat(),tour1.getLng());
+            LatLng Location2 = new LatLng(tour2.getLat(), tour2.getLng());
             float[] results1 = new float[3];
             float[] results2 = new float[3];
 

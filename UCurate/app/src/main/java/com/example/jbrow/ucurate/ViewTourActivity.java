@@ -202,12 +202,12 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
         }
         Hashtable<String, Bitmap> markerImages = new Hashtable();
         for (Artwork art:artworks) {
-            Marker curr = mMap.addMarker(new MarkerOptions().position(art.location).title(art.title).snippet(art.description));
+            Marker curr = mMap.addMarker(new MarkerOptions().position(new LatLng(art.getLat(), art.getLng())).title(art.title).snippet(art.description));
             markerImages.put(curr.getId(), BitmapFactory.decodeResource(getResources(),R.drawable.rheinii));
             if (start == null) {
-                start = art.location;
+                start = new LatLng(art.getLat(), art.getLng());
             } else {
-                String url = getDirectionsUrl(start, art.location);
+                String url = getDirectionsUrl(start, new LatLng(art.getLat(), art.getLng()));
                 DownloadTask downloadTask = new DownloadTask();
                 // Start downloading json data from Google Directions API
                 downloadTask.execute(url);

@@ -36,7 +36,8 @@ public class Artwork implements Parcelable{
     Bitmap image;
     String title;
     String description;
-    LatLng location;
+    //LatLng location;
+    double lat,lng;
     String userID;
     String path;
     String id;
@@ -51,7 +52,8 @@ public class Artwork implements Parcelable{
     public Artwork(String title, String description, LatLng location, String userID) {
         this.title = title;
         this.description = description;
-        this.location = location;
+        this.lat = location.latitude;
+        this.lng = location.longitude;
         this.userID = userID;
     }
 
@@ -65,7 +67,8 @@ public class Artwork implements Parcelable{
     public Artwork(Artwork other){
         this.title = other.title;
         this.description = other.description;
-        this.location = other.location;
+        this.lat = other.lat;
+        this.lng = other.lng;
     }
     //basic constructor for testing
     // -Matt
@@ -78,7 +81,8 @@ public class Artwork implements Parcelable{
         image = (Bitmap) in.readValue(Bitmap.class.getClassLoader());
         title = in.readString();
         description = in.readString();
-        location = (LatLng) in.readValue(LatLng.class.getClassLoader());
+        lat = in.readDouble();
+        lng = in.readDouble();
     }
 
     @Override
@@ -91,7 +95,8 @@ public class Artwork implements Parcelable{
         dest.writeValue(image);
         dest.writeString(title);
         dest.writeString(description);
-        dest.writeValue(location);
+        dest.writeDouble(lat);
+        dest.writeDouble(lng);
     }
 
     public static final Parcelable.Creator<Artwork> CREATOR = new Parcelable.Creator<Artwork>() {
@@ -119,8 +124,11 @@ public class Artwork implements Parcelable{
         this.description = description;
     }
 
-    public void setLocation(LatLng location) {
-        this.location = location;
+    public void setLat(double l) {
+        this.lat = l;
+    }
+    public void setLng(double l){
+        this.lng = l;
     }
 
     public Bitmap getImage() {
@@ -138,8 +146,11 @@ public class Artwork implements Parcelable{
         return description;
     }
 
-    public LatLng getLocation() {
-        return location;
+    public double getLat() {
+        return lat;
+    }
+    public double getLng(){
+        return lng;
     }
 
     public String getId() {
