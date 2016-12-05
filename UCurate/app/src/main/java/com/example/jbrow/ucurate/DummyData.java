@@ -14,33 +14,55 @@ import java.util.ArrayList;
 
 public class DummyData {
 
-    ArrayList<Artwork> artwork = new ArrayList<Artwork>();
-    ArrayList<Tour> tour = new ArrayList<Tour>();
-    User user;
 
-    public DummyData(Context context) {
+    public static ArrayList<Artwork> getArtwork(Context context) {
+        ArrayList<Artwork> artwork = new ArrayList<Artwork>();
         for (int i = 0; i < 10; i++) {
 
             Bitmap temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.spiritualheroes);
             artwork.add(new Artwork("test image", "test image description", new LatLng(38.990633, -76.949384), "bob", temp));
         }
-        for (int i = 0; i < 10; i++) {
-            tour.add(new Tour(artwork, "test tour", "bob", "test tour description"));
-        }
-        user = new User("bob", "i'm a dummy value");
-        user.setArtworkList(artwork);
-        user.setTourList(tour);
-    }
 
-    public ArrayList<Artwork> getArtwork() {
         return artwork;
     }
 
-    public ArrayList<Tour> getTour() {
+    public ArrayList<Tour> getTour(Context context) {
+        ArrayList<Tour> tour = new ArrayList<Tour>();
+
+        ArrayList<Artwork> artwork = new ArrayList<Artwork>();
+        for (int i = 0; i < 10; i++) {
+
+            Bitmap temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.spiritualheroes);
+            artwork.add(new Artwork("test image", "test image description", new LatLng(38.990633, -76.949384), "bob", temp));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            tour.add(new Tour(artwork, "test tour", "bob", "test tour description"));
+        }
         return tour;
     }
 
-    public User getUser() {
+    public User getUser(Context context) {
+
+        User user = new User("bob", "i'm a dummy value");
+
+        ArrayList<Artwork> artwork = new ArrayList<Artwork>();
+        for (int i = 0; i < 10; i++) {
+
+            Bitmap temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.spiritualheroes);
+            artwork.add(new Artwork("test image", "test image description", new LatLng(38.990633, -76.949384), "bob", temp));
+        }
+
+        user.setArtworkList(artwork);
+
+        ArrayList<Tour> tour = new ArrayList<Tour>();
+
+        for (int i = 0; i < 10; i++) {
+            tour.add(new Tour(artwork, "test tour", "bob", "test tour description"));
+        }
+
+        user.setTourList(tour);
+
         return user;
     }
 
