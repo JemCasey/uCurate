@@ -141,21 +141,6 @@ public class MainActivity extends AppCompatActivity
 //        FireBase.addUser("userIDtest4_new", testUser);
 
     }
-    // Handles result from a call to device's native Camera Activity
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Intent startEditArtActivity = new Intent(MainActivity.this,Login.class);
-//            Bundle extras = data.getExtras();
-//            Uri uri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
-//
-//            startEditArtActivity.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-            startActivity(startEditArtActivity);
-        }
-    }
-
-
-    
 
     public void loadFab() {
         Log.d("MainActivity", "loadFab entered");
@@ -188,24 +173,9 @@ public class MainActivity extends AppCompatActivity
         addArtFab.setOnClickListener(new View.OnClickListener() {
             // start activity to add an image
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                // Ensure that there's a camera activity to handle the intent
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    // Create the File where the photo should go
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                    } catch (IOException ex) {
-
-                    }
-                    // Continue only if the File was successfully created
-                    if (photoFile != null) {
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                    }
-                }
-
-
+                Intent editArtIntent = new Intent(getApplicationContext(),EditArtActivity.class);
+                editArtIntent.putExtra(User.USER_ID,mUsername);
+                startActivity(editArtIntent);
             }
         });
 
@@ -213,24 +183,12 @@ public class MainActivity extends AppCompatActivity
             // start activity to add a tour
             public void onClick(View view) {
                 Intent addTourIntent = new Intent(getApplicationContext(), NewTourActivity.class);
+                addTourIntent.putExtra(User.USER_ID,mUsername);
                 startActivity(addTourIntent);
             }
         });
 
     }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        //File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName,".jpg");
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
 
 
     public void animateFab() {
