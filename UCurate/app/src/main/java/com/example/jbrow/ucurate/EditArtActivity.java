@@ -121,14 +121,15 @@ public class EditArtActivity extends AppCompatActivity {
 
                     Artwork artwork = new Artwork(artTitle, artDescription, location, userId, bitmap);
 
-                    String artworkId = FireBase.addArtwork(userId, artwork, bitmap);
+                    //String artworkId = FireBase.addArtwork(userId, artwork, bitmap);
 
                     // TODO: update feed?
 
                     // TODO: start view art activity
-                    Intent viewArtIntent = new Intent(getApplicationContext(), ViewArtActivity.class);
-                    viewArtIntent.putExtra(Artwork.ARTWORK_ID, artworkId);
-                    viewArtIntent.putExtra(User.USER_ID, userId);
+//                    Intent viewArtIntent = new Intent(getApplicationContext(), ViewArtActivity.class);
+//                    viewArtIntent.putExtra(Artwork.ARTWORK_ID, artworkId);
+//                    viewArtIntent.putExtra(User.USER_ID, userId);
+                    finish();
                 }
             });
         }
