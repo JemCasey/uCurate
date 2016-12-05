@@ -26,39 +26,61 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class EditArtActivity extends AppCompatActivity {
 
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
     // Reference to the LocationManager
     private LocationManager mLocationManager;
+    private String mUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_art);
 
-        Intent intent = getIntent();
-        Uri imageUri = Uri.parse(intent.getStringExtra("IMAGE_URI"));
-        final String userId = intent.getStringExtra(User.USER_ID);
 
-        Bitmap image = null;
-        try {
-            image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-        } catch (IOException e) {
-            Toast.makeText(getApplicationContext(), "Image could not be found", Toast.LENGTH_LONG);
-            e.printStackTrace();
-            finish();
+        mUsername = getIntent().getStringExtra(User.USER_ID);
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
         }
-        final Bitmap finalImage = image;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            setContentView(R.layout.activity_edit_art);
+
+            final String userId = mUsername;
+            ImageView imageView = (ImageView) findViewById(R.id.edit_art_image);
+
+            final Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(bitmap);
 
 
-        ImageView editArtImage = (ImageView) findViewById(R.id.edit_art_image);
-        editArtImage.setImageBitmap(finalImage);
-
-        final EditText editArtTitle = (EditText) findViewById(R.id.edit_art_title);
-        final EditText editArtDescription = (EditText) findViewById(R.id.edit_art_description);
+            final EditText editArtTitle = (EditText) findViewById(R.id.edit_art_title);
+            final EditText editArtDescription = (EditText) findViewById(R.id.edit_art_description);
 
 //        // Spinner that displays all current tours
 //        final Spinner toursSpinner = (Spinner) findViewById(R.id.edit_art_tours);
@@ -70,44 +92,60 @@ public class EditArtActivity extends AppCompatActivity {
 //        toursSpinner.setAdapter(toursAdapter);
 
 
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        Button createImageButton = (Button) findViewById(R.id.edit_art_create_button);
-        createImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            Button createImageButton = (Button) findViewById(R.id.edit_art_create_button);
+            createImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(),
-                        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                        && ActivityCompat.checkSelfPermission(getApplicationContext(),
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(getApplicationContext(),
+                            android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(getApplicationContext(),
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    Location lastLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                    String artTitle = editArtTitle.getText().toString();
+                    String artDescription = editArtDescription.getText().toString();
+                    LatLng location = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+
+                    Artwork artwork = new Artwork(artTitle, artDescription, location, userId, bitmap);
+
+                    String artworkId = FireBase.addArtwork(userId, artwork, bitmap);
+
+                    // TODO: update feed?
+
+                    // TODO: start view art activity
+                    Intent viewArtIntent = new Intent(getApplicationContext(), ViewArtActivity.class);
+                    viewArtIntent.putExtra(Artwork.ARTWORK_ID, artworkId);
+                    viewArtIntent.putExtra(User.USER_ID, userId);
                 }
-                Location lastLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-                String artTitle = editArtTitle.getText().toString();
-                String artDescription = editArtDescription.getText().toString();
-                LatLng location = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-
-                Artwork artwork = new Artwork(artTitle, artDescription, location, userId, finalImage);
-
-                String artworkId = FireBase.addArtwork(userId, artwork, finalImage);
-
-                // TODO: update feed?
-
-                // TODO: start view art activity
-                Intent viewArtIntent = new Intent(getApplicationContext(), ViewArtActivity.class);
-                viewArtIntent.putExtra(Artwork.ARTWORK_ID, artworkId);
-                viewArtIntent.putExtra(User.USER_ID, userId);
-            }
-        });
+            });
+        }
     }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        //File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName,".jpg");
+
+        // Save a file: path for use with ACTION_VIEW intents
+        // mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
 }
+
