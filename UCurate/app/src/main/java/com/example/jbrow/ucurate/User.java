@@ -24,9 +24,10 @@ public class User implements Parcelable {
 
     public User() {}
 
-    public User(String name, String biography) {
+    public User(String name, String biography, Bitmap image) {
         this.name = name;
         this.biography = biography;
+        this.userImage = image;
     }
 
     //copy constructor

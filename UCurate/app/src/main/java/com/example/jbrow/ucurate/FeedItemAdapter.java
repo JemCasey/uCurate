@@ -19,7 +19,7 @@ import java.util.List;
 
 public class FeedItemAdapter extends BaseAdapter {
 
-    private final List<Object> mItems = new ArrayList<Object>();
+    private final List<Artwork> mItems = new ArrayList<Artwork>();
     private final Context mContext;
     private final String mUserId;
 
@@ -28,12 +28,12 @@ public class FeedItemAdapter extends BaseAdapter {
         mUserId = userId;
     }
 
-    public void add(Object item) {
+    public void add(Artwork item) {
         mItems.add(item);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<Object> items) {
+    public void addAll(List<Artwork> items) {
         mItems.addAll(items);
         notifyDataSetChanged();
     }
@@ -86,17 +86,21 @@ public class FeedItemAdapter extends BaseAdapter {
             itemLayout = (RelativeLayout) convertView;
         }
 
-        User user = FireBase.getUser(userId);
+        //User user = FireBase.getUser(userId);
+        User user = DummyData.getUser(mContext);
+
 
         ImageView userImage = (ImageView) itemLayout.findViewById(R.id.user_image);
         userImage.setImageBitmap(user.getUserImage());
 
-        userImage.setOnClickListener(new View.OnClickListener() {
-            // start view account activity
-            public void onClick(View view) {
+//        userImage.setOnClickListener(new View.OnClickListener() {
+//            // start view account activity
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
-            }
-        });
+        final int finalpos = pos;
 
         TextView updateTitle = (TextView) itemLayout.findViewById(R.id.update_title);
         updateTitle.setText(title);
@@ -104,7 +108,7 @@ public class FeedItemAdapter extends BaseAdapter {
         updateTitle.setOnClickListener(new View.OnClickListener() {
             // start view tour/view art activity
             public void onClick(View view) {
-                startViewItem(item);
+                startViewItem(item, finalpos);
             }
         });
 
@@ -114,7 +118,7 @@ public class FeedItemAdapter extends BaseAdapter {
         updateContent.setOnClickListener(new View.OnClickListener() {
             // start view tour/view art activity
             public void onClick(View view) {
-                startViewItem(item);
+                startViewItem(item, finalpos);
             }
         });
 
@@ -124,23 +128,23 @@ public class FeedItemAdapter extends BaseAdapter {
         updateImage.setOnClickListener(new View.OnClickListener() {
             // start view tour/view art activity
             public void onClick(View view) {
-                startViewItem(item);
+                startViewItem(item, finalpos);
             }
         });
 
         return itemLayout;
     }
 
-    private void startViewItem(Object item) {
+    private void startViewItem(Object item, int pos) {
         if (item instanceof Artwork) {
-            String artworkId = ((Artwork) item).getId();
+            //String artworkId = ((Artwork) item).getId();
             Intent viewArtworkIntent = new Intent(mContext, ViewArtActivity.class);
-            viewArtworkIntent.putExtra(Artwork.ARTWORK_ID, artworkId);
+            viewArtworkIntent.putExtra(Artwork.ARTWORK_ID, pos);
             mContext.startActivity(viewArtworkIntent);
         } else if (item instanceof Tour) {
-            String tourId = ((Tour) item).getId();
+            //String tourId = ((Tour) item).getId();
             Intent viewTourIntent = new Intent(mContext, ViewTourActivity.class);
-            viewTourIntent.putExtra(Tour.TOUR_ID, tourId);
+            viewTourIntent.putExtra(Tour.TOUR_ID, pos);
             viewTourIntent.putExtra(User.USER_ID, mUserId);
             mContext.startActivity(viewTourIntent);
         } else {

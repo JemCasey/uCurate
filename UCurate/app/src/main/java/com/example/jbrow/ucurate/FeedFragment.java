@@ -14,8 +14,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class FeedFragment extends ListFragment {
@@ -23,6 +25,7 @@ public class FeedFragment extends ListFragment {
     FeedItemAdapter mFeedItemAdapter;
     private SwipeRefreshLayout swipeDownContainer;
     private ArrayList<Object> artworkAndTours = new ArrayList<Object>();
+    private ArrayList<Artwork> dummyData;
 
 
     /**
@@ -40,40 +43,40 @@ public class FeedFragment extends ListFragment {
         DatabaseReference artworkRef = database.getReference("artwork");
         DatabaseReference tourRef = database.getReference("tours");
 
-        artworkRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    for(DataSnapshot artworkSnapshot : userSnapshot.getChildren()) {
-                        artworkAndTours.add(artworkSnapshot.getValue(Artwork.class));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        tourRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    for(DataSnapshot tourSnapshot : userSnapshot.getChildren()) {
-                        artworkAndTours.add(tourSnapshot.getValue(Artwork.class));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        artworkRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+//                    for(DataSnapshot artworkSnapshot : userSnapshot.getChildren()) {
+//                        artworkAndTours.add(artworkSnapshot.getValue(Artwork.class));
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        tourRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+//                    for(DataSnapshot tourSnapshot : userSnapshot.getChildren()) {
+//                        artworkAndTours.add(tourSnapshot.getValue(Artwork.class));
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         String userId = getArguments().getString(User.USER_ID);
-
+        dummyData = DummyData.getArtwork(getContext());
         mFeedItemAdapter = new FeedItemAdapter(getActivity().getApplicationContext(), userId);
 
     }
@@ -86,6 +89,7 @@ public class FeedFragment extends ListFragment {
         // TODO: get data from database
 //        List<FeedItem> data = null; // get data
 //        mFeedItemAdapter.addAll(data);
+        mFeedItemAdapter.addAll(dummyData);
         setListAdapter(mFeedItemAdapter);
 
         swipeDownContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeDownContainer);
