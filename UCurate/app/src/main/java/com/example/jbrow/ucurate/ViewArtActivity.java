@@ -44,10 +44,14 @@ public class ViewArtActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userID = intent.getStringExtra(User.USER_ID);
-        artID = intent.getStringExtra(Artwork.ARTWORK_ID);
+        //artID = intent.getStringExtra(Artwork.ARTWORK_ID);
 
-        viewArt = FireBase.getArtWork(userID, artID);
-        
+        int artDummyId = intent.getIntExtra(Artwork.ARTWORK_ID, 0);
+
+        //viewArt = FireBase.getArtWork(userID, artID);
+        viewArt = DummyData.getArtwork(getApplicationContext()).get(artDummyId);
+
+
         ImageView image = (ImageView) findViewById(R.id.share_image);
         image.setImageBitmap(viewArt.getImage());
 
