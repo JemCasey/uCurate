@@ -72,7 +72,6 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_tour);
-        artworks = new ArrayList<>();
         Intent intent = getIntent();
         String userID = intent.getStringExtra(User.USER_ID);
         String tourID = intent.getStringExtra(Tour.TOUR_ID);
@@ -113,6 +112,7 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
                 .build();
     }
 
+    //method adapted from: http://wptrafficanalyzer.in/blog/driving-route-from-my-location-to-destination-in-google-maps-android-api-v2/
     private String getDirectionsUrl(LatLng origin, LatLng dest) {
 
         // Origin of route
@@ -137,6 +137,7 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
     }
 
     /** A method to download json data from url */
+    // adapted from http://wptrafficanalyzer.in/blog/driving-route-from-my-location-to-destination-in-google-maps-android-api-v2/
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
@@ -201,12 +202,12 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
         }
         Hashtable<String, Bitmap> markerImages = new Hashtable();
         for (Artwork art:artworks) {
-            Marker curr = mMap.addMarker(new MarkerOptions().position(art.location).title(art.title).snippet(art.description));
+            Marker curr = mMap.addMarker(new MarkerOptions().position(new LatLng(art.getLat(), art.getLng())).title(art.title).snippet(art.description));
             markerImages.put(curr.getId(), BitmapFactory.decodeResource(getResources(),R.drawable.rheinii));
             if (start == null) {
-                start = art.location;
+                start = new LatLng(art.getLat(), art.getLng());
             } else {
-                String url = getDirectionsUrl(start, art.location);
+                String url = getDirectionsUrl(start, new LatLng(art.getLat(), art.getLng()));
                 DownloadTask downloadTask = new DownloadTask();
                 // Start downloading json data from Google Directions API
                 downloadTask.execute(url);
@@ -246,6 +247,7 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
     }
 
     // Fetches data from url passed
+    //class adapted from http://wptrafficanalyzer.in/blog/driving-route-from-my-location-to-destination-in-google-maps-android-api-v2/
     private class DownloadTask extends AsyncTask<String, Void, String> {
 
         // Downloading data in non-ui thread

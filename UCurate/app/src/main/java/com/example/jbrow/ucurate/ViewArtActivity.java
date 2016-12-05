@@ -29,8 +29,10 @@ import java.util.List;
 public class ViewArtActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginManager loginManager;
-    private Artwork shareArt;
+    private Artwork viewArt;
     private ShareDialog mShareDialog;
+    private String userID;
+    private String artID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +41,21 @@ public class ViewArtActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_art);
-        shareArt = new Artwork("Betty", "this is by Gerhard Richter", new LatLng(38.99, -76.947760), "blah", BitmapFactory.decodeResource(getResources(),R.drawable.betty));
 
+        Intent intent = getIntent();
+        userID = intent.getStringExtra(User.USER_ID);
+        artID = intent.getStringExtra(Artwork.ARTWORK_ID);
+
+        viewArt = FireBase.getArtWork(userID, artID);
+        
         ImageView image = (ImageView) findViewById(R.id.share_image);
-        image.setImageBitmap(shareArt.getImage());
+        image.setImageBitmap(viewArt.getImage());
 
         TextView title = (TextView) findViewById(R.id.share_title);
-        title.setText(shareArt.getTitle());
+        title.setText(viewArt.getTitle());
 
         TextView description = (TextView) findViewById(R.id.share_description);
-        description.setText(shareArt.getDescription());
+        description.setText(viewArt.getDescription());
 
         setUpFacebookButton();
     }
@@ -95,7 +102,7 @@ public class ViewArtActivity extends AppCompatActivity {
 
     private void sharePhotoToFacebook(){
         SharePhoto photo = new SharePhoto.Builder()
-                .setBitmap(shareArt.getImage())
+                .setBitmap(viewArt.getImage())
                 .setCaption("Facebook SDK Test")
                 .build();
 

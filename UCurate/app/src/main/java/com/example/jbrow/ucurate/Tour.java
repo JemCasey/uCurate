@@ -23,7 +23,9 @@ public class Tour implements Parcelable {
     ArrayList<Artwork> artworkList = new ArrayList<Artwork>();
     String title;
     String description;
-    LatLng location;
+   // LatLng location;
+    double lat;
+    double lng;
     String userID;
     Artwork start;
     String id;
@@ -36,7 +38,8 @@ public class Tour implements Parcelable {
         this.title = title;
         this.description = description;
         this.userID = userID;
-        this.location = artworkList.get(0).location;
+        this.lat = artworkList.get(0).getLat();
+        this.lng = artworkList.get(0).getLng();
         this.start = artworkList.get(0);
     }
 
@@ -50,7 +53,8 @@ public class Tour implements Parcelable {
         this.title = other.title;
         this.description = other.description;
         this.userID = other.userID;
-        this.location = other.location;
+        this.lat = other.lat;
+        this.lng = other.lng;
         this.start = other.start;
     }
     //constructor for empty tour, no list of artwork yet
@@ -68,7 +72,8 @@ public class Tour implements Parcelable {
         artworkList = in.createTypedArrayList(Artwork.CREATOR);
         title = in.readString();
         description = in.readString();
-        location = (LatLng) in.readValue(LatLng.class.getClassLoader());
+        lat = in.readDouble();
+        lng = in.readDouble();
         start = (Artwork) in.readValue(Artwork.class.getClassLoader());
     }
 
@@ -105,12 +110,18 @@ public class Tour implements Parcelable {
         this.description = description;
     }
 
-    public LatLng getLocation() {
-        return location;
+    public double getLat() {
+        return lat;
+    }
+    public double getLng(){
+        return lng;
     }
 
-    public void setLocation(LatLng location) {
-        this.location = location;
+    public void setLat(double l) {
+        this.lat = l;
+    }
+    public void setLng(double l) {
+        this.lng = l;
     }
 
     public Artwork getStart() {
@@ -131,7 +142,8 @@ public class Tour implements Parcelable {
         parcel.writeTypedList(artworkList);
         parcel.writeString(title);
         parcel.writeString(description);
-        parcel.writeValue(location);
+        parcel.writeDouble(lat);
+        parcel.writeDouble(lng);
         parcel.writeValue(start);
     }
 
