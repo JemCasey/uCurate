@@ -149,10 +149,10 @@ public final class FireBase {
         if (userid == null || userid.equals("")) {
             return null;
         }
-        if (newArt.location == null) {
+       // if (newArt.getLat() == null || newArt.getLng() == null) {
             //TODO uncomment once we're storing actual artworks
             //return false;
-        }
+        //}
         //Map<String, Tour> t = new HashMap<String, Tour>();
         //t.put(userid, newTour);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
