@@ -76,9 +76,14 @@ public class ViewTourActivity extends FragmentActivity implements LocationListen
         String userID = intent.getStringExtra(User.USER_ID);
         String tourID = intent.getStringExtra(Tour.TOUR_ID);
 
-        Tour tour = FireBase.getTour(userID, tourID);
-        ArrayList<Artwork> artworks = tour.getArtworkList();
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        //Tour tour = FireBase.getTour(userID, tourID);
+
+        //ArrayList<Artwork> artworks = tour.getArtworkList();
+        artworks = new ArrayList();
+        artworks.add(new Artwork("Rhein II", "This is by Andreas Gursky. It became the most expensive photograph ever sold when a print was auctioned for $4.3 million in 2011.", new LatLng(38.992884, -76.948417), "bob",BitmapFactory.decodeResource(getResources(), R.drawable.spiritualheroes)));
+        artworks.add(new Artwork("Betty", "this is by Gerhard Richter", new LatLng(38.992884, -76.948417), "me", BitmapFactory.decodeResource(getResources(), R.drawable.spiritualheroes)));
+        artworks.add(new Artwork("Germany's Spiritual Heroes", "this is by Anselm Kiefer", new LatLng(38.992884, -76.948417),"bob", BitmapFactory.decodeResource(getResources(), R.drawable.spiritualheroes)));
+                // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

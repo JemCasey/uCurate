@@ -76,6 +76,8 @@ public class ExploreItemAdapter extends BaseAdapter {
                 Intent viewTourIntent = new Intent(mContext, EditTourActivity.class);
                 viewTourIntent.putExtra(Tour.TOUR_ID, tourId);
                 viewTourIntent.putExtra(User.USER_ID, mUserId);
+                viewTourIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 mContext.startActivity(viewTourIntent);
             }
         });

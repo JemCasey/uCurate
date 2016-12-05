@@ -64,6 +64,10 @@ public class ExploreFragment extends ListFragment {
         String userId = getArguments().getString(User.USER_ID);
 
         mExploreItemAdapter = new ExploreItemAdapter(getActivity().getApplicationContext(), userId);
+        ArrayList<Tour> tours = DummyData.getTour(getActivity());
+        for (Tour tour:tours) {
+            mExploreItemAdapter.add(tour);
+        }
     }
 
     private Location getLocationOnce() {

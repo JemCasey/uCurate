@@ -46,8 +46,9 @@ public class EditTourActivity extends Activity {
         if (tourName == null) {
             isNew = false;
             saved = true;
+            userID = "bob";
             tourID = intent.getStringExtra("tour_id");
-            tour = FireBase.getTour(userID, tourID);
+            tour = DummyData.getTour(this).get(0);
             titleText.setText(tour.getTitle());
             descriptionText.setText(tour.getDescription());
         } else {
@@ -144,7 +145,7 @@ public class EditTourActivity extends Activity {
             ArrayList<String> artworks = data.getStringArrayListExtra("artworks");
             for (String curr : artworks) {
                 //get artwork from id
-                Artwork temp = FireBase.getArtWork(userID, curr);
+                Artwork temp = DummyData.getArtWork(userID, curr, this);
                 listAdapter.addItem(listAdapter.getItemCount(),temp);
             }
             tour.setArtworkList(new ArrayList(listAdapter.getItemList()));

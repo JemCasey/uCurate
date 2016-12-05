@@ -67,4 +67,8 @@ public class DummyData {
         return user;
     }
 
+    public static Artwork getArtWork(String userID, String curr, Context context) {
+        Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.rheinii);
+        return new Artwork(new Artwork("test image", "test image description", new LatLng(38.990633, -76.949384), "bob", image));
+    }
 }
