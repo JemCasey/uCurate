@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Initialize Firebase Auth
-        mUsername = getIntent().getStringExtra("UserID");
+        //mUsername = getIntent().getStringExtra("UserID");
+        mUsername = "DebugUser2";
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
