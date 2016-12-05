@@ -98,9 +98,10 @@ public class FeedFragment extends ListFragment {
             public void onRefresh() {
                 // get new data
                 // TODO: get data from database
-                List<FeedItem> newData = null; // get data
+//                List<FeedItem> newData = null; // get data
+
                 mFeedItemAdapter.clear();
-                //mFeedItemAdapter.addAll(newData);
+                mFeedItemAdapter.addAll(dummyData);
                 swipeDownContainer.setRefreshing(false);
             }
         });
