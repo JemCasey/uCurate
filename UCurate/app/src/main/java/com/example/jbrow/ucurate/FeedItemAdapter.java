@@ -88,15 +88,15 @@ public class FeedItemAdapter extends BaseAdapter {
 
         User user = FireBase.getUser(userId);
 
-        ImageView userImage = (ImageView) itemLayout.findViewById(R.id.user_image);
-        userImage.setImageBitmap(user.getUserImage());
+ //       ImageView userImage = (ImageView) itemLayout.findViewById(R.id.user_image);
+//        userImage.setImageBitmap(user.getUserImage());
 
-        userImage.setOnClickListener(new View.OnClickListener() {
-            // start view account activity
-            public void onClick(View view) {
-
-            }
-        });
+//        userImage.setOnClickListener(new View.OnClickListener() {
+//            // start view account activity
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         TextView updateTitle = (TextView) itemLayout.findViewById(R.id.update_title);
         updateTitle.setText(title);

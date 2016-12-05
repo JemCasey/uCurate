@@ -37,7 +37,7 @@ public class ExploreFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Comparator<Tour> tourComparator = new TourComparator(getLocationOnce());
+        //final Comparator<Tour> tourComparator = new TourComparator(getLocationOnce());
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("tours");
@@ -47,11 +47,11 @@ public class ExploreFragment extends ListFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //mUser = dataSnapshot.getValue(User.class);
                 for(DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    for(DataSnapshot tourSnapshot : userSnapshot.getChildren()) {
-                        exploreTours.add(tourSnapshot.getValue(Tour.class));
-                        Collections.sort(exploreTours, tourComparator);
-
-                    }
+//                    for(DataSnapshot tourSnapshot : userSnapshot.getChildren()) {
+//                        exploreTours.add(tourSnapshot.getValue(Tour.class));
+//                        Collections.sort(exploreTours, tourComparator);
+//
+//                    }
                 }
             }
 

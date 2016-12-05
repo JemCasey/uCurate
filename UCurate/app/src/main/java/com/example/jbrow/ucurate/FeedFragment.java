@@ -1,5 +1,7 @@
 package com.example.jbrow.ucurate;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,14 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class FeedFragment extends ListFragment {
@@ -23,6 +28,7 @@ public class FeedFragment extends ListFragment {
     FeedItemAdapter mFeedItemAdapter;
     private SwipeRefreshLayout swipeDownContainer;
     private ArrayList<Object> artworkAndTours = new ArrayList<Object>();
+    private ArrayList<Object> dummyData = new ArrayList<Object>();
 
 
     /**
@@ -40,37 +46,37 @@ public class FeedFragment extends ListFragment {
         DatabaseReference artworkRef = database.getReference("artwork");
         DatabaseReference tourRef = database.getReference("tours");
 
-        artworkRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    for(DataSnapshot artworkSnapshot : userSnapshot.getChildren()) {
-                        artworkAndTours.add(artworkSnapshot.getValue(Artwork.class));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        tourRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    for(DataSnapshot tourSnapshot : userSnapshot.getChildren()) {
-                        artworkAndTours.add(tourSnapshot.getValue(Artwork.class));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        artworkRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+//                    for(DataSnapshot artworkSnapshot : userSnapshot.getChildren()) {
+//                        artworkAndTours.add(artworkSnapshot.getValue(Artwork.class));
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        tourRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+//                    for(DataSnapshot tourSnapshot : userSnapshot.getChildren()) {
+//                        artworkAndTours.add(tourSnapshot.getValue(Tour.class));
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         String userId = getArguments().getString(User.USER_ID);
 
@@ -83,9 +89,7 @@ public class FeedFragment extends ListFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
-        // TODO: get data from database
-//        List<FeedItem> data = null; // get data
-//        mFeedItemAdapter.addAll(data);
+        mFeedItemAdapter.addAll(dummyData);
         setListAdapter(mFeedItemAdapter);
 
         swipeDownContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeDownContainer);
@@ -93,10 +97,8 @@ public class FeedFragment extends ListFragment {
             @Override
             public void onRefresh() {
                 // get new data
-                // TODO: get data from database
-                List<FeedItem> newData = null; // get data
                 mFeedItemAdapter.clear();
-                //mFeedItemAdapter.addAll(newData);
+                mFeedItemAdapter.addAll(dummyData);
                 swipeDownContainer.setRefreshing(false);
             }
         });
