@@ -44,7 +44,8 @@ public class DummyData {
 
     public static User getUser(Context context) {
 
-        User user = new User("bob", "i'm a dummy value");
+        Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.betty);
+        User user = new User("bob", "i'm a dummy value", image);
 
         ArrayList<Artwork> artwork = new ArrayList<Artwork>();
         for (int i = 0; i < 10; i++) {
