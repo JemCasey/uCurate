@@ -26,7 +26,7 @@ public class DummyData {
         return artwork;
     }
 
-    public ArrayList<Tour> getTour(Context context) {
+    public static ArrayList<Tour> getTour(Context context) {
         ArrayList<Tour> tour = new ArrayList<Tour>();
 
         ArrayList<Artwork> artwork = new ArrayList<Artwork>();
@@ -42,7 +42,7 @@ public class DummyData {
         return tour;
     }
 
-    public User getUser(Context context) {
+    public static User getUser(Context context) {
 
         User user = new User("bob", "i'm a dummy value");
 
