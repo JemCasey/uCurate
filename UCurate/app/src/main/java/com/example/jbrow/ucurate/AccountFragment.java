@@ -46,26 +46,27 @@ public class AccountFragment extends ListFragment {
         DatabaseReference ref = database.getReference("users");
 
 
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //mUser = dataSnapshot.getValue(User.class);
-                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    if (postSnapshot.getKey().equals(userId)) {
-                        Log.d("AccountFragment", "Found: " + userId);
-                        user = postSnapshot.getValue(User.class);
-                    }
-                    Log.d("onDataChange", "leaving onDataChanged");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                //mUser = dataSnapshot.getValue(User.class);
+//                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+//                    if (postSnapshot.getKey().equals(userId)) {
+//                        Log.d("AccountFragment", "Found: " + userId);
+//                        user = postSnapshot.getValue(User.class);
+//                    }
+//                    Log.d("onDataChange", "leaving onDataChanged");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
 //      user = FireBase.getUser(userId);
+        user = DummyData.getUser(getContext());
     }
 
     @Override
@@ -77,14 +78,14 @@ public class AccountFragment extends ListFragment {
         setListAdapter(mAccountItemAdapter);
 
 
-//        TextView username = (TextView) view.findViewById(R.id.username);
-//        username.setText(user.getName());
-//
-//        TextView userBio = (TextView) view.findViewById(R.id.user_bio);
-//        userBio.setText(user.getBiography());
-//
-//        ImageView userImage = (ImageView) view.findViewById(R.id.user_image);
-//        userImage.setImageBitmap(user.getUserImage());
+        TextView username = (TextView) view.findViewById(R.id.username);
+        username.setText(user.getName());
+
+        TextView userBio = (TextView) view.findViewById(R.id.user_bio);
+        userBio.setText(user.getBiography());
+
+        ImageView userImage = (ImageView) view.findViewById(R.id.user_image);
+        userImage.setImageBitmap(user.getUserImage());
 
         addTypeSpinner(view);
         //addSortBySpinner(view);
